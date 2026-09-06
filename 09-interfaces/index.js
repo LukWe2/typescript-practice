@@ -33,14 +33,17 @@ let developers = [
         framework: "Angular",
         programminglanguages: ["TypeScript", "Python", "C++"]
     },
-    {
-        // Property 'userName' is missing in type '{ mailAdress: string; age: number; framework: string; programminglanguages: string[]; }' but required in type 'Developer'.
-        mailAdress: "anonymous@gmx.de",
-        age: 28,
-        framework: "None",
-        programminglanguages: ["TypeScript"]
-    }
 ];
+/*
+{
+    // Property 'userName' is missing in type '{ mailAdress: string; age: number; framework: string; programminglanguages: string[]; }' but required in type 'Developer'.
+    mailAdress: "anonymous@gmx.de",
+    age: 28,
+    framework: "None",
+    programminglanguages: ["TypeScript"]
+}
+];
+*/
 // 1. Was beschreibt ein Interface in TypeScript?
 // Antwort: Ein Interface beschreibt die erwartete Shape eines Objekts. Jede Variable vom definierten Typ/Interface (z.B. User) müssen die definierten Properties mit den angegebenen Typen 
 // (z.B. userName: string;, mailAdress: string;, age: number;) besitzen.
