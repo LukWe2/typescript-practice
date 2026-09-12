@@ -38,8 +38,13 @@ const addPrefix = function (value) {
 };
 console.log(processText("Hallo", toUpperCase));
 console.log(processText("Nice", addPrefix));
+/*
 // Test wegen Function Type (geht nicht um Callback Function hier), gleiche Signatur wie oben add()
-const wrongOperation = (a, b) => {
+const wrongOperation: MathOperation = (
+    a,
+    b
+) => {
     return `${a + b}`;
 };
+*/
 //# sourceMappingURL=index.js.map
