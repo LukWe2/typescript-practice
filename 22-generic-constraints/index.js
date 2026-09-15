@@ -1,7 +1,5 @@
-"use strict";
 // Mit Generic Constraints also extends prüft man nur bzw. legt fest dass ein anderer Typ (der Generic im Objekt/Funktion wie T) dessen Properties sicher beistzen muss, sonst Fehler
 // man fügt keine extra Property einem Objekt hinzu, man prüft nur
-Object.defineProperty(exports, "__esModule", { value: true });
 function getId(item) {
     return item.id;
 }
@@ -56,6 +54,7 @@ const userStore = {
     ],
     selectedItem: null,
 };
+export {};
 // 1. Was bedeutet: <T extends { id: number }> ?
 // Antwort: Es bedeutet, dass der Generic gilt also die Varibale, das Objekt, Array oder die Function kann generell jeden Typen annehmen, da hier jedoch extends und dann die Property id vom Typ number festgelegt wird, muss worauf dieser Typ angewandt wird neben T die Property id mit Typ number enthalten, sonst gibt es einen Fehler.
 // Antwort: Richtig. Präziser: T ist ein generischer Typ, aber er ist eingeschränkt: Jeder konkrete Typ, der für T eingesetzt wird, muss mindestens eine Property id: number besitzen. Also nicht „jeder Typ ist erlaubt“, sondern nur Typen, die diese Mindestanforderung erfüllen.

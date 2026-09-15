@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const developer01 = {
     name: "Lukas",
     email: "lukas.werner.2@gmx.de",
@@ -29,6 +27,7 @@ function printDeveloper(developer) {
 }
 printDeveloper(developer01);
 printDeveloper(developer02);
+export {};
 //printDeveloper(developer03);
 // 1. Was bedeutet das & hier?: type Developer = User & WorkInfo;
 // Antwort: Es bedeutet, dass der neue Typ Developer die Properties der beiden Typen User und WorkInfo beinhaltet und dass Objekte vom Typen Developer all diese beinhalten muss

@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const project = {
     projectName: "TypeScript Project",
     userAmount: 20,
@@ -10,6 +8,7 @@ const project = {
 console.log(project);
 console.log(`Project Name: ${project.projectName}`);
 console.log(project.isReleased);
+export {};
 //project.monthlyCosts = "1000";
 //project.projectManager = "Lukas";
 // 1. Was erkennt TypeScript automatisch bei diesem Objekt?:

@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function identity(value) {
     return value;
 }
@@ -29,6 +27,7 @@ const numberResponse = {
     data: 42,
     success: false
 };
+export {};
 /*
 const falseResponse: ApiResponse<number> = {
     data: "Hello",

@@ -1,4 +1,3 @@
-"use strict";
 // Kann auch Typen für Funktionen festlegen, die beschreiben von welchem Typ deren Argumente dann haben müssen und welchen Typen von Rückgabe also jede die diesen Typ besitzen
 // Kann innerhalb von Funktionskopf eine weitere Funktion aufrufen, was eine Callback Funktion ist
 // kann entweder bei der Definition dieser Callback Funktion im Methodenkopf die Typen für Argumente und Rückgabe definieren:
@@ -8,7 +7,6 @@ const calculate = function(a: number, b: number, callback: (number01: number, nu
 }
 */
 // oder direkt einen vorher definierten Typen mitgeben wie hier MathOperation: const calculate = function(a: number, b: number, callback: MathOperation){ callback(a, b); } 
-Object.defineProperty(exports, "__esModule", { value: true });
 const add = (a, b) => {
     return a + b;
 };
@@ -38,6 +36,7 @@ const addPrefix = function (value) {
 };
 console.log(processText("Hallo", toUpperCase));
 console.log(processText("Nice", addPrefix));
+export {};
 /*
 // Test wegen Function Type (geht nicht um Callback Function hier), gleiche Signatur wie oben add()
 const wrongOperation: MathOperation = (

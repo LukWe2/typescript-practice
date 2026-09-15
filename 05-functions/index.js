@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function giveProject(projectName, amountUser) {
     return (`Project name: ${projectName}, amount of users: ${amountUser}`);
 }
@@ -13,6 +11,7 @@ function printString(text) {
     console.log(text);
 }
 printString("Hello");
+export {};
 //printString(30);
 // 1. Was bedeutet hier das letzte : number?:
 /*

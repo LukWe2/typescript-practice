@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const userStore = {
     items: [
         {
@@ -43,6 +41,7 @@ addItem(userStore, { id: 3, name: "Peter" });
 // geht nicht, weil mit userStore was vom Typ DataStore<User> ist, der Generic T auf User inferriert wird und deshalb das zweite Argument des Function Aufruf auch ein Objekt vom Typ User sein muss, also mit properties id und name und nicht id und title
 //addItem(userStore, { id: 3, title: "Java Project" });
 console.log(userStore);
+export {};
 // 1. Was bedeutet hier T[]****?
 /*
 type Collection<T> = {

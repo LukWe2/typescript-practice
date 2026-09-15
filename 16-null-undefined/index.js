@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 // Erst ist sie bewusst leer (selectedUser = null;) und später kann ein User darin liegen: selectedUser = user01;
 let selectedUser = null;
 console.log(selectedUser);
@@ -45,6 +43,7 @@ function printName(name) {
     // sicherstellen, dass name tatsächlich ein string und nicht null ist.
     //console.log(name.toUpperCase());
 }
+export {};
 // 1. Was ist der grundlegende Unterschied zwischen null und undefined?
 // Antwort: undefined bedeutet typischerweise, dass für diesen Wert aktuell nichts festgelegt ist z.B. weil ein Wert noch nicht zugewiesen wurde, null bedeutet eher, dass bewusst festgelegt wurde, dass kein Wert vorhanden ist, z.B. wenn eine Variable bewusst null sein soll
 // Antwort: undefined bedeutet typischerweise, dass ein Wert noch nicht gesetzt bzw. nicht vorhanden ist; null wird eher bewusst gesetzt, um „kein Wert“ auszudrücken.

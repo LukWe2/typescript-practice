@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const developer01 = ["Lukas", 24, "React", true];
 const developer02 = ["Anna", 22, "Angular", false];
 function printDeveloper(developer) {
@@ -15,6 +13,7 @@ function getCoordinates(latitude, longitude) {
 }
 const [latitudeVariable, longitudeVariable] = getCoordinates(4, 6);
 console.log(`Latitude: ${latitudeVariable}, Longitude: ${longitudeVariable}`);
+export {};
 // Reihenfolge der Typen stimmt nicht, in Tupel ist erst string, dann number deklariert aber hier wird ein Array mit einem Wert von number als erstes und dann als zweites string erstellt was zu einem Fehler führt
 // Type 'number' is not assignable to type 'string'. und Type 'string' is not assignable to type 'number'.
 /*

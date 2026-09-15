@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 let value; // "id" | "name" | "email" | "active"
 value = "Hello";
 value = 42;
@@ -34,6 +32,7 @@ const anotherUser = {
     email: "anna2@gmx.de",
     active: false
 };
+export {};
 // wollten hier jetzt dem neuen Typen Wrong den Type einer Property wiederum vom Type User zuordnen, geht aber nicht weil age keine Property von User ist, type Right = User["active"] würde z.B. gehen dann wäre Right vom Typ boolean
 //type Wrong = User["age"];
 // geht nicht weil wir NameType den Type von Property name gegeben haben mit User["name"], müsste also const wrongName: NameType = "Hello" z.B. sein

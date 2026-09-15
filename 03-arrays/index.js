@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 let programmingLanguages = ["TypeScript", "JavaScript", "Java", "Python"];
 let experienceDevs = [2, 4, 5, 1, 12];
 let publishedProjects = [true, false, false, true, true];
@@ -8,6 +6,7 @@ experienceDevs.push(6);
 publishedProjects.push(false);
 console.log(`${programmingLanguages}, ${experienceDevs}, ${publishedProjects}`);
 console.log(programmingLanguages, experienceDevs, publishedProjects);
+export {};
 // 1. Was bedeutet: string[]
 // Antwort: ist ein Array aus String Objekten
 // Antwort: string[] ist ein Array, dessen Elemente vom Typ string sind -> Denn string bezeichnet in TypeScript hier den primitiven String-Typ und nicht speziell „String-Objekte“

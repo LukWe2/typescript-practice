@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 ;
 const project01 = {
     id: 1,
@@ -14,6 +12,7 @@ project01.description = "This is now a JavaScript Project";
 // Cannot assign to 'id' because it is a read-only property.
 //project01.id = 2;
 let technologies = ["TypeScript", "Git", "Java"];
+export {};
 // Property 'push' does not exist on type 'readonly string[]'.
 //technologies.push("Node.js");
 // 1. Was schützt readonly bei: readonly id: number;

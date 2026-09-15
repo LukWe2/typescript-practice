@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 let projectStatus;
 projectStatus = "planning";
 console.log(projectStatus);
@@ -14,6 +12,7 @@ printUserRole("admin");
 printUserRole("user");
 //printUserRole("lead");
 let rating = 3;
+export {};
 //rating = 6;
 // 1. Was ist der Unterschied zwischen: let status: string; und let status: "loading" | "success" | "error";?
 // Antwort: Der Unterschied ist, dass die erste Variable jeden String als Wert haben kann, die zweite jedoch Literal Types hat und nur diese genauen Strings in der Variable stehen dürfen

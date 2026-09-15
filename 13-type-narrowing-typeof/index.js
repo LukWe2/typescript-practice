@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function formatInput(input) {
     if (typeof input === "string") {
         console.log(input.toUpperCase());
@@ -26,6 +24,7 @@ function describeValue(value) {
 describeValue("Cool");
 describeValue(20);
 describeValue(true);
+export {};
 /*
 function describeValueFalse(value: string | number | boolean){
 

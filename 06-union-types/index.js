@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 let projectId = 1;
 console.log(projectId);
 projectId = "2";
@@ -17,6 +15,7 @@ let projectData = [
 ];
 projectData.push("Hello");
 projectData.push(10);
+export {};
 //projectData.push(true);
 //projectId = false;
 // 1. Was bedeutet das | hier?: let id: string | number;

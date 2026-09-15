@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 let userKey;
 // geht weil User eine Property namens id hat, kann sie jetzt als String zuweisen, weil keyof User deren Properties als Literal Union also "id" | "name" | "email" | "active" festlegt und "id" darunter ist, deswegen ist die Zuweisung valide
 userKey = "id";
@@ -47,6 +45,7 @@ const project = {
     released: true
 };
 console.log(getProperty(project, "title"));
+export {};
 // Argument of type '"email"' is not assignable to parameter of type '"title" | "framework" | "released"'.
 // jetzt ist K bzw. die Keys die Properties von project als keys, also function getProperty<project (nicht Typ aber TypeScript inferriert die Properties aus dem Objekt project), "title" | "framework" |"released">(object: User, key: "title" | "framework" |"released")
 //getProperty(project, "email");

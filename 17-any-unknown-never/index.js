@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 let valueAny;
 valueAny = "Hello";
 valueAny = 24;
@@ -33,6 +31,7 @@ printUnknown(true);
 function throwError(message) {
     throw new Error(message);
 }
+export {};
 // 1. Was ist der wichtigste Unterschied zwischen any und unknown?
 // Antwort: Bei beiden Typen kann einer Variable fast jeder Typ zugewiesen werden also string, number, boolean usw., der Unterschied ist, dass man mit any auch typspezifische Funktionen wie .toUpperCase() für Strings auf die Variable aufrufen kann,
 // mit unknown nicht, mit diesem Typen kann man die Variable zwar zuweisen mit verschiedenen Typen aber keine typspezifischen Methoden auf dieser aufrufen

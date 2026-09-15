@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 let project1 = {
     projectName: "TypeScript Project 1",
     amountUser: 30,
@@ -32,6 +30,7 @@ function printProject(project) {
     console.log(`Project name: ${project.projectName}, Project status: ${project.projectStatus}`);
 }
 printProject(project1);
+export {};
 //printProject(project3);
 // 1. Was macht: type UserId = string | number; und entsteht dadurch eine neue Variable?
 // Antwort: Das erstellt einen type in TypeScript also einen Namen für einen eigenen Typ, der bestimmte Variablennamen und Typen festlegt. Es wird keine neue Variable dadurch erstellt, ein type wird lediglich als Typ einer Variable aufgerufen

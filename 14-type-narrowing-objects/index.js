@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const developer01 = {
     name: "Lukas",
     framework: "React",
@@ -47,6 +45,7 @@ const car01 = new Car();
 const bike01 = new Bike();
 moveVehicle(car01);
 moveVehicle(bike01);
+export {};
 // 1. Was prüft dieser Ausdruck?: "framework" in person
 // Antwort: Dieser Ausdruck prüft, ob das Objekt person die Property framework besitzt, und somit von einem bestimmten Typen ist. Mit "in" kann man mit Type Narrowing für Objekte festlegen, was für einen bestimmten Typen passiert, wenn ein Objekt mehrere Typen haben kann
 // Antwort: Deine Antwort stimmt: Es wird zur Laufzeit geprüft, ob das Objekt eine Property namens framework besitzt. TypeScript nutzt diese Information anschließend zum Narrowing. Wichtig dabei: in prüft zunächst die Property, nicht direkt „den TypeScript-Typ“. Dass TypeScript daraus auf Developer schließen kann, liegt daran, dass in deiner Union nur Developer diese Property besitzt.

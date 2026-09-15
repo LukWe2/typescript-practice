@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 ;
 const developer01 = {
     name: "Lukas",
@@ -41,6 +39,7 @@ function printGitHubUsername(developer) {
 printGitHubUsername(developer01);
 printGitHubUsername(developer02);
 printGitHubUsername(developer03);
+export {};
 // 1. Was bedeutet das ? hier?: githubUsername?: string;
 // Antwort: es bedeutet dass die Variable githubUsername im TypeScript Objekt optional ist, heißt eine Instanz kann diese Variable beinhalten oder auch nicht, und wirft keinen Fehler wie wenn die Variable nicht eine optionale Variable wäre -> ist nicht nur Variable sondern Property
 // Antwort: githubUsername ist eine optionale Property. Ein Developer-Objekt darf sie besitzen, muss sie aber nicht besitzen. Wenn sie vorhanden ist, muss ihr Wert ein string sein. Wichtig: Es ist eine Property, nicht eine „optionale Variable“.

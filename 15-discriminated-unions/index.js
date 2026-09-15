@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const loadingObject = {
     status: "loading"
 };
@@ -38,6 +36,7 @@ function handleApiState(state) {
 handleApiState(loadingObject);
 handleApiState(successObject);
 handleApiState(errorObject);
+export {};
 // 1. Was ist der Discriminator bei:
 /*
 type Result =

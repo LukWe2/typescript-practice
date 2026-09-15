@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 ;
 let user = {
     userName: "Lukas",
@@ -34,6 +32,7 @@ let developers = [
         programminglanguages: ["TypeScript", "Python", "C++"]
     },
 ];
+export {};
 /*
 {
     // Property 'userName' is missing in type '{ mailAdress: string; age: number; framework: string; programminglanguages: string[]; }' but required in type 'Developer'.
