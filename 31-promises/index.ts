@@ -114,7 +114,7 @@ function getNumber(): Promise<number> {
 const number01 = getNumber().then((number) => {
 
     console.log(number * 2);
-})
+});
 
 // Argument of type 'string' is not assignable to parameter of type 'User | PromiseLike<User>'.
 /*function getWrongUser(): Promise<User> {
