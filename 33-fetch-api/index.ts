@@ -232,8 +232,8 @@ const data = await response.json();
 
 // 7. Warum brauchen wir um fetch(...) normalerweise kein eigenes new Promise(...)?
 // Antwort: Weil fetch(...) vorimplementiert ist und das schon mit drin ist.
-// Antwort: Richtig. fetch(...) ist bereits eine Promise-basierte API und gibt selbst Promise<Response> zurück. Ein zusätzliches new Promise(...) darum wäre normalerweise nur ein unnötiger Wrapper.
 
+// Antwort: Richtig. fetch(...) ist bereits eine Promise-basierte API und gibt selbst Promise<Response> zurück. Ein zusätzliches new Promise(...) darum wäre normalerweise nur ein unnötiger Wrapper.
 
 
 // 8. Warum garantiert const data: User = await response.json(); nicht automatisch, dass die API zur Runtime wirklich einen gültigen User geliefert hat?
