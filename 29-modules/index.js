@@ -1,3 +1,10 @@
+// 29 – Modules: import / export
+// Teile den Code auf mehrere Dateien auf: Erstelle z.B. math.ts mit exportierten Funktionen add() und multiply() sowie user.ts mit einem exportierten User-Type und einer exportierten printUser()-Funktion.
+// Importiere diese Funktionen und Typen in index.ts; verwende für reine TypeScript-Typen import type und für Runtime-Werte normale Named Imports.
+// Erstelle anschließend einen User, verwende printUser() sowie die importierten mathematischen Funktionen und teste, was passiert, wenn eine nicht exportierte oder nicht existierende Funktion importiert werden soll.
+// Beachte in deinem NodeNext-/ESM-Setup, dass lokale Imports im TypeScript-Code mit der späteren .js-Endung geschrieben werden, obwohl die Quelldateien .ts heißen.
+// Ergänze außerdem "type": "module" in package.json, damit Node/TypeScript die Dateien als ECMAScript Modules behandelt und normale import/export-Syntax mit der vorhandenen tsconfig-Konfiguration funktioniert.
+// Unterscheide dabei Named Exports, Default Exports und reine Type-Imports und beachte, dass eine Datei mit import/export einen eigenen Modul-Scope besitzt.
 // Fehler vorher:
 // "ECMAScript imports and exports cannot be written in a CommonJS file under 'verbatimModuleSyntax'"
 // dadurch hat export function ... immer ein Fehler geworfen in math.ts und user.ts

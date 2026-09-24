@@ -1,3 +1,7 @@
+// 05 – Functions
+// Erstelle eine Funktion aus Projektname + Nutzeranzahl mit string-Rückgabewert, eine Funktion zur Berechnung von Gesamtkosten mit number-Rückgabewert und eine void-Funktion.
+// Rufe die Funktionen korrekt auf und teste anschließend absichtlich einen Funktionsaufruf mit einem falschen Argument-Typ.
+
 function giveProject(projectName: string, amountUser: number): string{
 
     return(`Project name: ${projectName}, amount of users: ${amountUser}`);

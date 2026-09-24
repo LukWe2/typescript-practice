@@ -1,3 +1,11 @@
+// 22 – Generic Constraints
+// Erstelle einen Typ Identifiable mit id: number sowie unterschiedliche Typen wie User und Project, die diese Mindestanforderung erfüllen.
+// Implementiere getId<T extends Identifiable>(), sodass die Funktion unterschiedliche konkrete Typen akzeptiert, aber garantiert sicher auf item.id zugreifen kann.
+// Implementiere returnItem<T extends Identifiable>(), das den kompletten konkreten Typ T zurückgibt, sodass zusätzliche Properties wie name oder email erhalten bleiben und nicht auf Identifiable reduziert werden.
+// Erstelle zusätzlich printLength<T extends { length: number }>() und teste, warum Strings und Arrays erlaubt sind, eine number aber nicht.
+// Erstelle schließlich einen DataStore<T extends Identifiable>, sodass nur Elementtypen verwendet werden können, die mindestens id: number besitzen.
+
+
 // Mit Generic Constraints also extends prüft man nur bzw. legt fest dass ein anderer Typ (der Generic im Objekt/Funktion wie T) dessen Properties sicher beistzen muss, sonst Fehler
 // man fügt keine extra Property einem Objekt hinzu, man prüft nur
 

@@ -1,3 +1,7 @@
+// 08 – Type Aliases
+// Erstelle ProjectStatus als eigenen Type Alias und einen Project-Type mit Projektname, Nutzeranzahl, Framework und Status.
+// Erstelle zwei Projects, speichere sie in einem Project[] und schreibe printProject(project: Project); teste anschließend den ungültigen Status "finished".
+
 type ProjectStatus = "planning" | "development" | "released";
 
 type Project = {

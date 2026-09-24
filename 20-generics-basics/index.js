@@ -1,3 +1,7 @@
+// 20 – Generics Basics
+// Erstelle identity<T>(), sodass Eingabe- und Rückgabetyp zusammengehören, und teste sie mit string, number und boolean.
+// Erstelle getFirst<T>() für Arrays sowie createPair<T, U>(), das zwei möglicherweise unterschiedliche Typen als Tupel zurückgibt und per Destructuring verwendet wird.
+// Erstelle außerdem ApiResponse<T> mit generischem data-Feld, verwende ihn z.B. als ApiResponse<string> und ApiResponse<number> und teste einen falschen data-Typ.
 function identity(value) {
     return value;
 }

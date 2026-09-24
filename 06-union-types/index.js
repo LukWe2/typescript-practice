@@ -1,3 +1,6 @@
+// 06 – Union Types
+// Erstelle projectId als string | number, eine printUserId()-Funktion mit string | number sowie ein (string | number)[] mit Projektdaten.
+// Verwende jeweils beide erlaubten Typen und teste anschließend absichtlich boolean als ungültigen Wert.
 let projectId = 1;
 console.log(projectId);
 projectId = "2";

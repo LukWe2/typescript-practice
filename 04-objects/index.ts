@@ -1,3 +1,8 @@
+// 04 – Objects
+// Erstelle ein explizit typisiertes Softwareprojekt-Objekt mit projectName, userAmount, usedFramework, isReleased und monthlyCosts.
+// Gib das Objekt und einzelne Properties aus, ändere gültige Properties und teste anschließend einen falschen Property-Typ sowie eine nicht vorhandene Property.
+
+
 const project: {
 
     projectName: string,

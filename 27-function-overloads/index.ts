@@ -1,3 +1,12 @@
+// 27 – Function Overloads
+// Erstelle processInput() mit mehreren Overload Signatures: Ein string-Aufruf soll einen string zurückgeben, ein number-Aufruf dagegen eine number.
+// Schreibe darunter eine gemeinsame Implementation Signature, die alle erlaubten Varianten verarbeiten kann, und narrowe den Union Type innerhalb der Implementierung, bevor die passende Verarbeitung erfolgt.
+// Teste, dass TypeScript beim Aufruf mit string bzw. number jeweils einen präzisen Rückgabetyp inferiert und ein nicht definierter Aufruf wie processInput(true) abgelehnt wird.
+// Erstelle zusätzlich getUserName() mit einer Overload für nur firstName und einer weiteren für firstName + lastName.
+// Die gemeinsame Implementierung soll beide Varianten unterstützen; deshalb muss ein Parameter, der nicht bei jeder Overload vorhanden ist, in der Implementation entsprechend optional behandelt werden.
+// Achte darauf, dass die Overload Signatures nur erlaubte Aufrufvarianten beschreiben, während nur die Implementation Signature den tatsächlichen Funktionscode enthält.
+
+
 // Overload Funktionen erlauben mehrere Varianten einer Funktion (hat z.B. Argument 1, Argument 2 und Argument 3) bereitzustellen, die erlauben nur einzelne Argument- und Rückgabetypen der Implementation zu benutzen (also bis auf einen alle wegzulassen, z.B. Overload nur mit Argument 1 oder Overload nur mit Argument 3), 
 // außerdem verschiedene Kombinationen dieser (also auch welche weglassen aber verschiedene Kombis, z.B. Argument 1 und Argument 3 in einer Overload, Argument 2 und 3, Argument 1 und 3)
 // Overload Funktionen werden über die eigentliche Implementierung (Implementation-Signature) geschrieben

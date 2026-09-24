@@ -1,3 +1,10 @@
+// 23 – keyof
+// Erstelle einen User-Typ mit mehreren Properties und leite mit keyof User eine Literal Union aller gültigen Property-Keys wie "id" | "name" | "email" | "active" ab.
+// Speichere gültige Keys in einer Variable und teste absichtlich einen ungültigen Key, der im User-Typ nicht existiert.
+// Implementiere printUserProperty(user, key), bei der key nur ein gültiger keyof User sein darf, und greife mit user[key] auf den dazugehörigen Wert zu.
+// Implementiere anschließend eine generische Funktion getProperty<T, K extends keyof T>(object, key), sodass sie nicht nur mit User, sondern auch mit anderen Objektformen wie Project funktioniert.
+// Teste, dass für jedes konkrete Objekt nur dessen tatsächlich vorhandene Property-Namen als Key verwendet werden können.
+
 type User = {
 
     id: number,

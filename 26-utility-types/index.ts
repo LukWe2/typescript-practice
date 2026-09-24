@@ -1,3 +1,11 @@
+// 26 – Utility Types
+// Erstelle einen vollständigen User-Typ mit id, name, email, active und role und leite daraus verschiedene neue Typen mit TypeScripts Utility Types ab.
+// Verwende Partial<User>, um einen UserUpdate-Typ zu erzeugen, bei dem alle ursprünglichen Properties optional sind und deshalb nur einzelne Änderungen angegeben werden müssen.
+// Verwende Pick<User, ...>, um einen UserPreview-Typ zu erstellen, der ausschließlich ausgewählte Properties wie id, name und role besitzt; teste, dass nicht ausgewählte Properties dort nicht erlaubt sind.
+// Verwende Omit<User, ...>, um einen PublicUser zu erstellen, bei dem sensible Properties wie email entfernt wurden, während alle anderen Properties erhalten bleiben.
+// Verwende Record<K, V>, um einen Objekttyp mit fest vorgegebenen Keys und einem gemeinsamen Value-Typ zu erzeugen, z.B. Beschreibungen für "admin", "developer" und "user".
+// Beachte dabei, dass Partial, Pick und Omit neue Typen aus einem bestehenden Typ ableiten und den ursprünglichen User-Typ nicht verändern.
+
 // Mit den Utility Functions Partial<T>, Pick<T, K>, Omit<T, K>, Record<K, V> kann man aus einem bestehenden Typen neue erstellen (Partial, Pick, Omit) oder seperat einen neuen erstellen mit Record
 
 type User = {

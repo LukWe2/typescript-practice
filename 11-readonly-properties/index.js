@@ -1,3 +1,7 @@
+// 11 – Readonly Properties
+// Erstelle ein Project-Interface mit readonly id, name, framework, einem festen Status und optionaler description.
+// Verändere die normalen Properties nachträglich und teste absichtlich, dass id nicht neu zugewiesen werden kann.
+// Erstelle außerdem ein readonly string[] und teste, dass das Array z.B. nicht mit push() verändert werden kann.
 ;
 const project01 = {
     id: 1,

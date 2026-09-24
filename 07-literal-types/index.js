@@ -1,3 +1,6 @@
+// 07 – Literal Types
+// Erstelle Literal Unions für projectStatus ("planning" | "development" | "released"), User-Rollen ("admin" | "developer" | "user") und ein Rating von 1 bis 5.
+// Teste jeweils gültige Werte und anschließend absichtlich ungültige Werte wie "finished", "lead" oder 6.
 let projectStatus;
 projectStatus = "planning";
 console.log(projectStatus);

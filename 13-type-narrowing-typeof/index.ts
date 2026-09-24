@@ -1,3 +1,9 @@
+// 13 – Type Narrowing mit typeof
+// Erstelle formatInput(input: string | number), das Strings großschreibt und Zahlen verdoppelt, nachdem der Union Type mit typeof eingegrenzt wurde.
+// Erstelle describeValue(value: string | number | boolean) und behandle alle drei Typen über if / else if / else unterschiedlich.
+// Teste absichtlich typspezifische Methoden im falschen Narrowing-Zweig, z.B. toFixed() auf string oder toUpperCase() auf number.
+
+
 function formatInput(input: string | number): void{
 
     if (typeof input === "string"){

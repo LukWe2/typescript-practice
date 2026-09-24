@@ -1,3 +1,8 @@
+// 16 – null und undefined
+// Erstelle einen User mit optionaler email und eine Variable selectedUser: User | null, die zunächst bewusst null ist und später einen User enthalten kann.
+// Narrowe User | null vor dem Property-Zugriff, verwende Optional Chaining für optionale Werte und ?? für einen Fallback, wenn email null/undefined ist.
+// Teste absichtlich null bei einer reinen string-Variable sowie den Zugriff auf eine String-Methode bei string | null ohne vorheriges Narrowing.
+
 type User = {
 
     id: number,

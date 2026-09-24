@@ -1,3 +1,12 @@
+// 32 – async / await
+// Schreibe async-Funktionen, die Promise-Werte mit await auflösen, sodass innerhalb der Funktion mit den tatsächlichen Ergebnissen statt mit Promise<T> gearbeitet werden kann.
+// Verwende z.B. getUser(): Promise<User>, warte mit const user = await getUser() darauf und verarbeite anschließend normale User-Properties.
+// Erstelle auch eine weitere async-Funktion, die aus einem geladenen User z.B. nur dessen Namen ermittelt und Promise<string> zurückgibt.
+// Verwende try/catch für mögliche Fehler beim await; behandle den catch-Wert zunächst als unbekannt und narrowe ihn mit error instanceof Error, bevor auf error.message zugegriffen wird.
+// Teste außerdem, dass ein return in einer async-Funktion automatisch in ein erfülltes Promise verpackt wird und ein throw dazu führt, dass das zurückgegebene Promise rejected wird.
+// Unterscheide dabei zwischen sequenziellen await-Aufrufen und dem eigentlichen Promise, das eine async-Funktion immer an ihren Aufrufer zurückgibt.
+
+
 // haben immernoch getUser() Methode, in der Promise von uns manuell erstellt wird und die von JavaScript vorimplementierte resolve() und reject() Methode implementiert wird mit dem Erfolgswert des Promises
 // jetzt der Unterschied: in letztem Konzept haben wir diesen Erfolgswert dann mit getUsers().then((users) => { geholt, users war hier dieser Wert der in resolve implementiert wurde (der Erfolswert), in reject einfach wenn es fehlgeschlagen ist
 // innerhalb von .then() wurde dann das vorher zurückgegebene Promise in den Wert, den das Promise hat also z.B. String bei Promise<string> oder User bei Promise<User> umgewandelt, aber .this() returned am Ende wieder ein Promise, also nur innerhalb des .then ist es 

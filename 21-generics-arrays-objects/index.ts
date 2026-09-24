@@ -1,3 +1,9 @@
+// 21 – Generics mit Arrays & Objekten
+// Erstelle die Typen User und Project sowie einen generischen DataStore<T>, der ein items-Array vom Typ T[] und ein selectedItem vom Typ T | null enthält.
+// Erstelle anschließend sowohl einen DataStore<User> als auch einen DataStore<Project>, sodass dieselbe Store-Struktur mit unterschiedlichen Datentypen verwendet wird.
+// Implementiere getFirstItem<T>(), das das erste Element eines DataStore<T> als T | undefined zurückgibt, und addItem<T>(), das ein neues Element vom richtigen Typ T in store.items einfügt.
+// Teste außerdem, dass z.B. in einen DataStore<User> kein Project-Objekt eingefügt werden kann und TypeScript T anhand des übergebenen Stores korrekt inferiert.
+
 type User = {
 
     id: number,

@@ -1,3 +1,7 @@
+// 03 – Arrays
+// Erstelle Arrays für Programmiersprachen (string[]), Entwicklererfahrung (number[]) und veröffentlichte Projekte (boolean[] per Type Inference).
+// Füge gültige Werte mit push() hinzu und teste anschließend bei mindestens einem Array absichtlich einen Wert des falschen Typs.
+
 let programmingLanguages: string[] = ["TypeScript", "JavaScript", "Java", "Python"];
 
 let experienceDevs: number[] = [2, 4, 5, 1, 12];

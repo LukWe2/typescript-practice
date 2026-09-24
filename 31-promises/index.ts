@@ -1,3 +1,12 @@
+// 31 – Promises
+// Erstelle zunächst eigene Promise-Beispiele mit new Promise<T>() und verstehe dabei den Executor mit resolve und reject.
+// Baue z.B. eine Funktion getUser(), die Promise<User> zurückgibt und den User erst nach einer kurzen Verzögerung mit resolve(...) bereitstellt.
+// Verarbeite das Ergebnis anschließend mit .then(...) und beobachte, dass der Parameter im .then()-Callback bereits vom Typ User ist.
+// Teste außerdem Promise-Chaining: Gib innerhalb von .then(...) einen neuen Wert zurück und beobachte, dass dadurch wieder ein neues Promise mit entsprechendem Typ entsteht.
+// Unterscheide dabei klar zwischen Promise<User> und User: Ohne await bzw. .then() besitzt du nur das Promise und noch nicht den späteren User-Wert.
+// Teste zusätzlich einen Fehlerfall mit reject(...) und behandle ihn entsprechend, damit sowohl fulfilled als auch rejected Promises nachvollziehbar werden.
+
+
 // Können Promises selbst erstellen mit:
 // new Promise((resolve, reject) => {
 //     if (success) {

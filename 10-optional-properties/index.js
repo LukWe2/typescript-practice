@@ -1,3 +1,6 @@
+// 10 – Optional Properties
+// Erstelle Developer mit name, age und framework sowie optionalem githubUsername und yearsExperience und erstelle Objekte mit allen, einzelnen und keinen optionalen Properties.
+// Schreibe printGitHubUsername(), das auf eine vorhandene Property prüft, und teste anschließend githubUsername mit einem falschen number-Wert.
 ;
 const developer01 = {
     name: "Lukas",

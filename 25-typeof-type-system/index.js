@@ -1,3 +1,9 @@
+// 25 – typeof im TypeScript-Typsystem
+// Erstelle zunächst ein konkretes Objekt defaultUser und leite mit type User = typeof defaultUser automatisch einen neuen Typ aus dessen Shape und Property-Typen ab.
+// Verwende den daraus erzeugten User-Typ für weitere Objekte und teste, dass fehlende oder falsch typisierte Properties erkannt werden.
+// Erstelle ein Array technologies und leite sowohl den Typ des gesamten Arrays mit typeof technologies als auch den Typ eines einzelnen Elements mit typeof technologies[number] ab.
+// Kombiniere keyof und typeof bei einem settings-Objekt, sodass nur dessen tatsächliche Property-Namen als SettingKey erlaubt sind.
+// Erstelle außerdem eine normale Funktion add und leite mit typeof add deren komplette Funktionssignatur als neuen Function Type ab; implementiere anschließend eine weitere Funktion wie multiply mit genau dieser Signatur.
 const defaultUser = {
     id: 1,
     name: "Lukas",

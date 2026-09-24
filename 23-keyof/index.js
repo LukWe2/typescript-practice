@@ -1,3 +1,9 @@
+// 23 – keyof
+// Erstelle einen User-Typ mit mehreren Properties und leite mit keyof User eine Literal Union aller gültigen Property-Keys wie "id" | "name" | "email" | "active" ab.
+// Speichere gültige Keys in einer Variable und teste absichtlich einen ungültigen Key, der im User-Typ nicht existiert.
+// Implementiere printUserProperty(user, key), bei der key nur ein gültiger keyof User sein darf, und greife mit user[key] auf den dazugehörigen Wert zu.
+// Implementiere anschließend eine generische Funktion getProperty<T, K extends keyof T>(object, key), sodass sie nicht nur mit User, sondern auch mit anderen Objektformen wie Project funktioniert.
+// Teste, dass für jedes konkrete Objekt nur dessen tatsächlich vorhandene Property-Namen als Key verwendet werden können.
 let userKey;
 // geht weil User eine Property namens id hat, kann sie jetzt als String zuweisen, weil keyof User deren Properties als Literal Union also "id" | "name" | "email" | "active" festlegt und "id" darunter ist, deswegen ist die Zuweisung valide
 userKey = "id";

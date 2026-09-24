@@ -1,3 +1,7 @@
+// 14 – Type Narrowing bei Objekten
+// Erstelle Developer und Designer mit unterschiedlichen Properties und eine Funktion describePerson(person: Developer | Designer).
+// Narrowe den Union Type zur Laufzeit mit "framework" in person und greife erst danach auf die jeweils typspezifischen Properties zu.
+// Erstelle zusätzlich Car und Bike als Klassen und narrowe Car | Bike mit instanceof, bevor drive() bzw. ride() ausgeführt wird.
 const developer01 = {
     name: "Lukas",
     framework: "React",

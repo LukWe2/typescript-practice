@@ -1,3 +1,11 @@
+// 28 – Classes
+// Erstelle ein Interface Identifiable mit readonly id und eine Klasse User, die dieses Interface implementiert.
+// Die Klasse soll Properties mit unterschiedlichen Sichtbarkeiten besitzen: readonly id, public name, private email und protected role, die über einen constructor initialisiert werden.
+// Implementiere Methoden wie getEmail() und printUser(), um auf Instanzdaten zuzugreifen bzw. sie auszugeben, und erstelle anschließend mit new mehrere Instanzen der Klasse.
+// Teste, dass private email von außen nicht direkt zugänglich ist, protected role nur innerhalb von User bzw. Unterklassen verfügbar ist und readonly id nach der Initialisierung nicht verändert werden kann.
+// Erstelle anschließend eine Klasse Admin extends User mit einer zusätzlichen permissions-Property, rufe im Admin-constructor über super(...) den Parent-constructor auf und initialisiere danach die zusätzlichen Admin-Daten.
+// Implementiere in Admin eine Methode, die auf die geerbte protected role zugreifen kann, und teste den Unterschied zwischen Vererbung mit extends und einem reinen Vertrag mit implements.
+
 interface Identifiable {
 
     readonly id: number;

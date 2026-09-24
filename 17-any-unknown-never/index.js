@@ -1,3 +1,7 @@
+// 17 – any, unknown und never
+// Vergleiche any und unknown, indem du beiden Variablen verschiedene Werttypen zuweist und anschließend eine typspezifische Methode verwenden möchtest.
+// Zeige, dass any unsichere Zugriffe erlaubt, während unknown zuerst mit typeof narrowed werden muss; verarbeite in printUnknown() string, number und sonstige Werte getrennt.
+// Erstelle außerdem throwError(message): never, das immer einen Fehler wirft und deshalb niemals normal zum Aufrufer zurückkehrt.
 let valueAny;
 valueAny = "Hello";
 valueAny = 24;

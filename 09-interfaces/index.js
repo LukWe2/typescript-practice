@@ -1,3 +1,6 @@
+// 09 – Interfaces
+// Erstelle ein User-Interface mit name, email und age sowie Developer extends User mit framework und einem Array von Programmiersprachen.
+// Erstelle User/Developer-Objekte, printDeveloper(), ein Developer[] mit mindestens zwei Einträgen und teste einen Developer, dem eine geerbte User-Property fehlt.
 ;
 let user = {
     userName: "Lukas",

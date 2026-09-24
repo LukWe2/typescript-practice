@@ -1,3 +1,7 @@
+// 12 – Intersection Types
+// Erstelle die Typen User und WorkInfo und kombiniere sie per Intersection zu Developer; ergänze Developer zusätzlich um framework.
+// Erstelle mehrere Developer, speichere sie in einem Developer[] und gib ausgewählte Daten mit printDeveloper() aus.
+// Teste absichtlich ein Developer-Objekt, bei dem eine erforderliche Property eines kombinierten Typs fehlt.
 const developer01 = {
     name: "Lukas",
     email: "lukas.werner.2@gmx.de",

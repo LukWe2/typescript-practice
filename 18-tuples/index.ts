@@ -1,3 +1,8 @@
+// 18 – Tuples
+// Erstelle ein benanntes DeveloperTuple mit fester Reihenfolge aus name, age, framework und isWorking und lege mehrere passende Tupel an.
+// Greife zunächst über Indizes auf Werte zu und verwende anschließend Destructuring; erstelle außerdem getCoordinates(), das ein [number, number]-Tupel zurückgibt.
+// Teste absichtlich ein Tupel mit falscher Reihenfolge der Typen und beobachte, dass Position und Typ bei Tuples festgelegt sind.
+
 type DeveloperTuple = [
 
     name: string,

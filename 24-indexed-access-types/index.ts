@@ -1,3 +1,10 @@
+// 24 – Indexed Access Types
+// Verwende Indexed Access Types wie User["name"], User["id"] und User["active"], um direkt die Typen einzelner Properties eines bestehenden Typs auszulesen.
+// Erstelle mit User[keyof User] einen Typ, der die möglichen Value-Typen aller User-Properties als Union enthält, und teste gültige bzw. ungültige Zuweisungen.
+// Erweitere getProperty<T, K extends keyof T>() aus dem vorherigen Konzept so, dass der Rückgabetyp T[K] lautet und dadurch abhängig vom konkreten Key exakt der richtige Property-Typ zurückgegeben wird.
+// Prüfe z.B., dass getProperty(user, "name") als string, getProperty(user, "id") als number und getProperty(user, "active") als boolean inferiert wird.
+// Erstelle außerdem einen UserArray = User[] und ermittle mit UserArray[number] den Typ eines einzelnen Array-Elements; teste auch ungültige Property-Zugriffe wie User["age"].
+
 type User = {
 
     id: number,

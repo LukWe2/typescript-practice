@@ -1,3 +1,8 @@
+// 02 – Type Inference
+// Erstelle Variablen für Projektname, Nutzeranzahl, Veröffentlichungsstatus, monatliche Kosten und Framework ohne explizite Typangaben und gib sie aus.
+// Weise anschließend zwei Variablen absichtlich Werte eines falschen Typs zu und beobachte die durch Type Inference erkannten Fehler.
+
+
 let projectName = "TypeScript Practice";
 
 let playerAmount = 5;

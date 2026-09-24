@@ -1,3 +1,12 @@
+// 30 – tsconfig.json & Strict Mode
+// Untersuche die zentrale tsconfig.json des Projekts und die Auswirkungen wichtiger Compiler-Einstellungen wie strict, module, target, noUncheckedIndexedAccess und exactOptionalPropertyTypes.
+// Teste mit strictNullChecks, dass null nicht einer reinen string-Variable zugewiesen werden darf, solange null nicht ausdrücklich Teil des Typs ist.
+// Erstelle eine Funktion mit einem untypisierten Parameter und beobachte durch noImplicitAny, dass TypeScript einen impliziten any-Typ ablehnt; typisiere den Parameter anschließend korrekt.
+// Greife bei aktiviertem noUncheckedIndexedAccess auf einen beliebigen Array-Index zu und beobachte, dass TypeScript z.B. string | undefined statt nur string annimmt, weil der Index außerhalb des vorhandenen Arrays liegen könnte.
+// Erstelle einen Typ mit optionaler Property email?: string und untersuche exactOptionalPropertyTypes: Die Property darf vollständig fehlen, aber wenn sie vorhanden ist, muss sie wirklich string sein und darf nicht einfach explizit undefined enthalten.
+// Verstehe dabei die tsconfig.json als projektweite Konfiguration dafür, wie streng TypeScript prüft, welches JavaScript erzeugt wird und welches Modul-System verwendet wird.
+
+
 // Vorhandene Einstellungen:
 
 // strict: true

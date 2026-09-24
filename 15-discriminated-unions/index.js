@@ -1,3 +1,9 @@
+// 15 – Discriminated Unions
+// Modelliere LoadingState, SuccessState und ErrorState als getrennte Objekttypen mit der gemeinsamen Literal-Property status und kombiniere sie zu ApiState.
+// Aufgrund des Union Types ApiState muss ein Objekt wenn es den jeweiligen status Wert hat auch z.B. die zweite Property haben wie in SuccessState oder ErrorState, da mit diesem Diskriminator TypeScript erkennen kann welcher Typ gemeint ist
+// gibt also Fehler wenn man status: "success" hat ohne die data Property, auch wenn es ein Union ist und somit theoretisch nur einer der Typen erfüllt sein muss, dieser literal String als Diskriminator weist dann wieder genau den Typen zu und muss erfüllt werden (nicht wie bei Union Types mit Objekten, Konzept 06 und 15)
+// Erstelle alle drei Zustände und verarbeite ApiState in handleApiState() mit switch(state.status), sodass TypeScript den jeweiligen Typ automatisch narrowed.
+// Teste absichtlich ungültige Zustände, z.B. "success" ohne data, und den Zugriff auf data im "loading"-Zweig.
 const loadingObject = {
     status: "loading"
 };

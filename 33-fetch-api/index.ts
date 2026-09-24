@@ -1,3 +1,12 @@
+// 33 – Fetch API
+// Lade mit fetch() Daten von einer echten Test-API und beachte, dass fetch() zunächst Promise<Response> zurückgibt; löse dieses Promise mit await auf.
+// Prüfe anschließend response.ok und wirf bei HTTP-Fehlern selbst einen Error, da fetch() z.B. bei einem 404/500 nicht automatisch rejected werden muss.
+// Lies den Response-Body mit await response.json() aus und verstehe die Trennung: fetch() liefert den Response, response.json() liest/parst anschließend dessen JSON-Inhalt.
+// Definiere einen passenden User-Typ für die erwartete API-Struktur und verarbeite die geladenen Daten danach weiter.
+// Beachte dabei aber bewusst: Eine TypeScript-Typannotation wie const data: User = await response.json() validiert externe API-Daten nicht zur Runtime; sie beschreibt nur, was TypeScript annehmen soll.
+// Verwende try/catch für Netzwerk-/Request-Fehler und gib sinnvolle Fehlermeldungen aus bzw. wirf Fehler weiter.
+
+
 // Wiederholung: await holt den Erfolgswert des Promise, also das was wir in Konzept 31 und 32 selbst implementiert haben in der resolve() Methode, hier wenn wir fetch(...) benutzen ist der Erfolgswert 
 // ein Response-Objekt, das dann verfügbar ist wenn zusätzlich noch die erfolgreiche Antwort der HTTP-Anfrage vorliegt (response.ok)
 // Also wichtig:
