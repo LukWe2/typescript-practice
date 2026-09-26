@@ -75,6 +75,15 @@ function main() {
         const valueOfEmailPropertyFirstUser = getUserProperty(firstUser, "email");
         console.log("E-Mail:", valueOfEmailPropertyFirstUser);
     }
+    // Absichtlicher TypeScript-Fehler 1:
+    //getUserByRole(apiData, "superadmin");
+    // Fehler, weil "superadmin" nicht zu User["role"] gehört.
+    // Absichtlicher TypeScript-Fehler 2:
+    //if (secondUser !== undefined) {
+    //    updateUser(secondUser, { id: 999 });
+    //}
+    // Fehler, weil updateUser() durch Omit<Partial<User>, "id">
+    // keine Änderung der id erlaubt.
 }
 main();
 // 1. Prüfe zur Laufzeit, ob apiData wirklich eine gültige Liste von Usern enthält. Sind die Daten ungültig, soll ein Fehler ausgelöst werden.
@@ -120,7 +129,19 @@ function updateUser(user, changedUser) {
     return updatedUser;
 }
 ;
+// User[K] ist ein Indexed Access Type, also dieser Ausdruck Typ[Key/Property] liefert einen Typ zurück, wie hier bei User["email"] string, bei User[id] gleich number, weil die Keys als Strings aufgerufen
+// werden aber trotzdem "id" dann eine number liefert also obwohl "id" als Argument ein String ist wird dann eine number gefunden, 
+// ausschlaggebend ist also das was im String steht und nicht dass es ein String ist in den [], so ist einfach der definierte Aufruf
+// keyof User ergibt "id" | "name" | "email" | "role" | "active" also ein Literal Union der Keys/Properties von User, K extends heißt nur dass K einer dieser Werte sein muss
+// also K muss "id" oder "name" oder "email" oder "role" oder "active" sein, somit geht nur User["id"], User["name"], User["email"], User["role"], User["active"] als Rückgabewert also
+// string, number, "admin" , "developer" , "viewer", boolean
+// mit K extends keyof User legt man also direkt fest, dass das zweite Argument also den Propertykey ("id" | "name" | "email" | "role" | "active") nur einer von diesen sein kann und man nur diese als Argument übergeben kann
+// Rückgabewert wird dann noch mit User[K] abgesichert, das liefert ja die Typen der Keys/Properties und user[property] liefert dann den Wert zum Key/Property weil object["property"] gleich Wert gibt,
+// bei Typen gibt typ["property"] aber den Typ der Property zurück, nicht den Wert (gibt ja noch keine Werte bei Typen) -> Wichtig: die Keys/Properties in den eckigen Klammern müssen aufgrund der Syntax von
+// Indexed Access Types als Strings übergeben werden und bei dem Objekt-Property-Zugriff auch (das heißt nicht Indexed Access Type, nur beim Type nicht beim Objekt da ist es ein einfacher Zugriff), 
+// deswegen passt keyof Type perfekt, weil es die Keys/Property Namen als Literal Union aus Strings zurückgibt!
 function getUserProperty(user, property) {
+    // beim Aufruf oben wäre das dann firstUser["email"], was wieder zwar als String aufgerufen wird der Key aber dann der Wert für die email-Property geholt wird
     return user[property];
 }
 export {};
