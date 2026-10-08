@@ -29,7 +29,7 @@ export function filterIssues(issues, filterObject) {
         // zweiter Denkfehler: wenn bei || der linke Ausdruck true ist, wird der rechte garnicht mehr geprüft, weil ja es ein OR bzw. ODER ist und wenn eines true ist der gesamte Ausdruck true ist
         // wenn im linken Ausdruck assignedOnly false ist, dann ist der linke Ausdruck true (und somit auch der Gesamtausdruck) und somit wird nicht noch geprüft, ob das assignee String null also nicht vorhanden ist, 
         // weil dann Issues mit und ohne dieses Array ja returned werden sollen (wenn Filter vorher natürlich auch stimmen),
-        // wenn der Filter an ist also assignedOnly true ist, dann ist der linke Ausdruck true und der Gesamtausdruck nur true, wenn der rechte Ausdruck true ist, und dieser ist nur true, wenn der assignee String vorhanden ist
+        // wenn der Filter an ist also assignedOnly true ist, dann ist der linke Ausdruck false und es wird noch der rechts Audruck geprüft (wenn links true dann direkt Gesamtausdruck true), wenn dann der rechte Ausdruck true ist, und dieser ist nur true, wenn der assignee String vorhanden ist
         const matchesAssignedOnly = filterObject.assignedOnly !== true || issue.assignee != null;
         return matchesStatus && matchesPriority && matchesAssignedOnly;
     });
