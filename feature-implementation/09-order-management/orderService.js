@@ -20,7 +20,7 @@ export function payOrder(orders, orderId, paidAt) {
         return order.id === orderId;
     });
     if (desiredOrder !== undefined && desiredOrder.status === "pending") {
-        // Struggle damit wie ich jetzt den einen Order den wir hier mit desiredOrder haben verändern und das paidAt Property einfügen, dachte auch mit { ...desiredOrder, paidAt: paidAt } oder so
+        // Struggle damit wie ich jetzt den einen Order den wir hier mit desiredOrder haben verändern (verändern eigentlich nicht sondern erzeugen eine veränderte Kopie) und das paidAt Property einfügen, dachte auch mit { ...desiredOrder, paidAt: paidAt } oder so
         // explizit als PaidOrder typisieren, weil TypeScript sonst beim neu erstellten
         // Objekt status: "paid" zu status: string widen kann.
         // Für die discriminated Union Order muss status aber exakt der Literal-Typ
@@ -84,7 +84,8 @@ export function shipOrder(orders, orderId, shippedAt) {
             shippedAt: shippedAt
         };
         // auch hier: erstellen mit .map() neues Array und fügen für jedes iterierte Objekt im originalen orders Array wird das bestehende also originale Objekt zurückgegeben, wenn id passt dann eben das oben drüber neu erstellte, sonst eben das originale wieder
-        // erstellen auch hier kein komplett neues Objekt mit neuer Referenz sondern hat noch gleiche Referenz, wenn wir order hier mutablen würden, würde auch Originalobjekt in Originalarray orders verändert werden, aber ist ja in dieser Aufgabe nicht relevant deswegn passt so
+        // erstellen auch hier kein komplett neues Objekt mit neuer Referenz (außer für das neue changedPaidToShippedOrder natürlich) sondern hat noch gleiche Referenz, 
+        // wenn wir order hier mutablen würden, würde auch Originalobjekt in Originalarray orders verändert werden, aber ist ja in dieser Aufgabe nicht relevant deswegn passt so
         const newOrderArrayWithShippedOrder = orders.map((order) => {
             if (order.id === orderId) {
                 return changedPaidToShippedOrder;
