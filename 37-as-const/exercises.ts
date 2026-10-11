@@ -40,4 +40,4 @@
 //
 // 9. Schreibe in Kommentaren zusammen, warum `const` alleine bei Arrays und Objekten
 //    nicht dasselbe bewirkt wie `as const` und warum `as const` 
-// keine Runtime-Unveränderlichkeit garantiert.
+//    keine Runtime-Unveränderlichkeit garantiert.
