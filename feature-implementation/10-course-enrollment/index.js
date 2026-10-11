@@ -7,7 +7,12 @@ function main() {
     console.log("Enrolled students for course 101: ", studentsEnrolledInCourse101);
     const enrollmentsAfterEnrollingPeter = enrollStudent(students, courses, enrollments, 4, 102, 6, "2026-10-09");
     console.log("Enrollment Array after enrolling Peter: ", enrollmentsAfterEnrollingPeter);
-    //const enrollmentsAfterEnrollingSophie = enrollStudent(students, courses, enrollments, 3, 103, 7, "2026-10-09"); -> ergibt Fehler: 
+    try {
+        const enrollmentsAfterEnrollingSophie = enrollStudent(students, courses, enrollments, 3, 103, 7, "2026-10-09");
+    }
+    catch (error) {
+        console.log("Expected enrollment error:", error);
+    }
     const completeEnrollment1 = completeEnrollment(enrollments, 1, "2026-10-09", 2.3);
     console.log("Enrollment Array after completing enrollment 1: ", completeEnrollment1);
     const dropEnrollment3 = dropEnrollment(enrollments, 3, "2026-10-09", "Too much work.");

@@ -19,6 +19,8 @@ export function getCurrentlyEnrolledStudents(students, enrollments, courseId) {
     // struggle jetzt damit, nachdem ich die enrollments für den Kurs habe, jetzt die Students mit den ids zu bekommen, die in enrollments als studentId eingetragen ist und zu den id in den students mit Typ Student passt
     // also wie war es nochmal das hatten wir in einer anderen Aufgabe wenn ich keine doppelte Schleife will aber trotzdem prüfen will, ob ein Wert für eine Property in einem Typ mit dem Wert einer Property in einem anderen Typen übereinstimmt?
     const enrolledStudents = students.filter((student) => {
+        // .some() geht durch jedes enrollment und prüft ob es zum Studenten gehört und wenn ja, ob dieser noch eingeschrieben ist also status "enrolled" ist
+        // iterieren also durch jeden Studenten, und für den gerade iterierten Studenten wiederum jedes enrollment für diesen Studenten und prüfen ob die studentId Property des enrollments zur id Property des Studenten passt, weil dann ist der Student im Kurs (wenn noch status von enrollment "enrolled" ist)
         return enrollmentsForCourse.some((enrollment) => {
             return (enrollment.studentId === student.id &&
                 enrollment.status === "enrolled"

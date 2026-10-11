@@ -29,6 +29,8 @@ export function getCurrentlyEnrolledStudents(students: Student[], enrollments: E
 
     const enrolledStudents = students.filter((student) => {
 
+        // .some() geht durch jedes enrollment und prüft ob es zum Studenten gehört und wenn ja, ob dieser noch eingeschrieben ist also status "enrolled" ist
+        // iterieren also durch jeden Studenten, und für den gerade iterierten Studenten wiederum jedes enrollment für diesen Studenten und prüfen ob die studentId Property des enrollments zur id Property des Studenten passt, weil dann ist der Student im Kurs (wenn noch status von enrollment "enrolled" ist)
         return enrollmentsForCourse.some((enrollment) => {
 
             return(
