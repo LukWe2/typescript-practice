@@ -78,9 +78,12 @@ user01FindWithNonNullAssertion.name;
 const value = 25;
 // TypeScript glaubt hier: valueTypeAssertion: string, obwohl 25 ja eine number ist
 const valueTypeAssertion = value;
+// in TypeScript hier ist der Typ von valueTypeAssertion: const valueTypeAssertion: string wegen der Type Assertion value as string
+// in der Ausgabe ist aber typeof valueTypeAssertion gleich number, was zeigt dass diese Type Assertion die Variable nur zur Typzeit zu einem string macht und zur Runtime in JavaScript eine number ist
 console.log(valueTypeAssertion);
 console.log(typeof valueTypeAssertion);
 const valueDirectConversion = String(value);
+// hier wird value tatsächlich zu einem String umgewandelt und ist auch zur Laufzeit noch ein string was console.log(typeof valueDirectConversion); beweist
 console.log(valueDirectConversion);
 console.log(typeof valueDirectConversion);
 export {};
