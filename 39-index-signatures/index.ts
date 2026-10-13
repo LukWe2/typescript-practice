@@ -1,50 +1,203 @@
+// 1.
+
+type ScoreBoard = {
+
+    [username: string]: number
+};
+
+// 2.
+
+const scoreBoard: ScoreBoard = {
+
+    Lukas: 3,
+    Anna: 5,
+    Peter: 2
+};
+
+// Zugriff über festen Key -> Objekt["Property"] gibt ja Value/Wert zu diesem Key aus
+const lukasScore = scoreBoard["Lukas"];
+console.log("Lukas Score: ", lukasScore)
+
+// Zugriff über Variable vom Typ string per Bracket Notation
+const username: string = "Anna";
+const dynamicScore = scoreBoard[username];
+console.log("Anna Score: ", dynamicScore);
+
+// 3.
+
+// Fehler: Type 'string' is not assignable to type 'number'. index.ts(5, 5): The expected type comes from this index signature.
+/*
+const scoreBoardWrong: ScoreBoard = {
+
+    Lukas: 3,
+    Anna: 5,
+    Felix: "3"
+};
+*/
 
 
+// 4.
 
+// Typ von scoreBoard.Sandra: (index) ScoreBoard[string]: number | undefined, bzw. mit Variable const scoreBoardSandra: number | undefined
+const scoreBoardSandra = scoreBoard.Sandra;
 
+if (scoreBoardSandra !== undefined){
 
+    scoreBoardSandra.toFixed(2);
+};
 
+// 5.
 
+type Product = {
 
+    id: number,
+    name: string,
+    price: number
+};
 
+type ProductDictionary = {
 
+    [productId: string]: Product,
+};
 
+// 6.
 
+// JavaScript-Objektkeys wie 1, 2, 3 werden als Property-Keys entsprechend behandelt
+// Um deutlicher zu zeigen, dass die Index Signature string-Keys beschreibt, kann man diese auch als string schreiben:
+const productDictionary: ProductDictionary = {
 
+    "1": {
+        id: 1,
+        name: "Toothbrush",
+        price: 10
+    },
+    "2": {
+        id: 2,
+        name: "Pan",
+        price: 30
+    },
+    "3": {
+        id: 3,
+        name: "Ring",
+        price: 100
+    }
+};
 
+const firstProduct = productDictionary["1"];
 
+if (firstProduct !== undefined) {
 
+    console.log("Erstes Product im Dictionary mit Indexed Signatures ist: ", firstProduct);
+}
 
+// 7.
 
+// Fehler: Property 'title' of type 'string' is not assignable to 'string' index type 'number'.
+//
+// Die String Index Signature [key: string]: number sagt:
+// Jeder vorhandene String-Key muss einen Value besitzen, der mit number kompatibel ist.
+//
+// Da auch "title" ein String-Key ist, müsste dessen Value ebenfalls number sein, ist aber string.
+// title: string widerspricht deshalb der Index Signature.
+//
+// Lösung:
+// - Value-Typ der Index Signature erweitern: string | number
+// oder
+// - die dynamischen number-Properties in ein verschachteltes Objekt auslagern.
+/*
+type MixedDictionary = {
 
+    title: string,
 
+    [key: string]: number
+}
+*/
 
+// Variante 1: Value der dynamischen Keys ist eine Union aus string und number, somit funktioniert title: string auch, da alle Values vom gleichen Typen sein müssen
+// und somit string und number möglich sind. Nachteil ist, dass nun auch jeder andere dynamische Key einen `string` als Value enthalten darf. 
+// Ein Zugriff wie `example[someKey]` liefert entsprechend `string | number`
+type MixedDictionaryUnion = {
 
+    title: string,
 
+    [key: string]: string | number
+}
 
+// Variante 2: Auslagerung der dynamischen Properties in ein eigenes verschachteltes Objekt
+type MixedDictionaryNestedObject = {
 
+    title: string,
 
+    scores: {
+        [key: string]: number
+    }
+}
 
+// 8.
 
+type ScoreCollection = {
 
+    title: string,
 
+    scores: {
+        [username: string]: number
+    }
+}
+// Das ist sauberer und ermöglicht präzisere Typen: title bleibt vom Value her string, die dynamischen Username-Keys sind strings, und die dazugehörigen Score-Values bleiben ausschließlich number.
+// Dadurch benötigt man auf dieser Ebene keine Union string | number.
 
+// 9.
 
+const scores: Record<string, number> = {
 
+    Lukas: 3,
+    Anna: 5,
+    Peter: 2
+};
 
+// Record<string, number> und eine String Index Signature
+// [key: string]: number beschreiben für diesen Anwendungsfall praktisch dieselbe Dictionary-Struktur:
+//
+// beliebige vorhandene String-Keys -> number-Values.
+//
+// Besonders nützlich wird Record<> aber, wenn der Key-Typ eine feste Literal Union ist.
+//
+// Record<string, number>
+// -> keine bestimmte Menge an Keys ist vorgeschrieben
+// -> beliebige vorhandene String-Keys müssen number-Values besitzen
+//
+// Record<Role, number>, wobei Role = "admin" | "editor" | "viewer"
+// -> admin, editor und viewer sind alle als Properties erforderlich
+// -> jeder dieser Values muss number sein.
+//
+// Bei einem direkt geschriebenen Objektliteral werden zusätzliche unbekannte Properties
+// außerdem durch TypeScripts Excess Property Check beanstandet.
 
+// 10.
 
+type Role = "admin" | "editor" | "viewer";
 
+// Record<string, number> verlangt als Key einen String und als Value numbers
+// Record<Role, number>, verlangt dass alle drei Literals der Union als Properties im Objekt die diesen Record<> Typ hat existieren, das ist bei string natürlich nicht so,
+// weil es nicht möglich ist in einem Objekt jeden möglichen string als Property zu haben was sozusagen der Fall wäre, wenn auch bei primitiven Typen Record<> verlangen
+// würde, dass der erste Parameter alle Möglichkeiten als Property haben muss wie bei einem komplexen Typ wie Role.
 
+// 11.
 
+type IndexSignatureReadOnly = {
 
+    readonly [username: string]: string
+};
 
+const readOnlyIndexSignatureObject: IndexSignatureReadOnly = {
 
+    environment: "production",
+    apiUrl: "https://example.com"
+};
 
-
-
-
-
+// Fehler: Index signature in type 'IndexSignatureReadOnly' only permits reading.
+// Kann Properties auch von Index Signatures dynamischen Properties wenn sie readonly sind auch nicht neu zuweisen oder verändern
+// readOnlyIndexSignatureObject.environment = "development";
 
 
 
