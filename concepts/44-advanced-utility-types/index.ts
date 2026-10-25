@@ -19,14 +19,6 @@ function getName(id: number): string {
     return "Name";
 };
 
-function getUser(id: number, name: string): User {
-
-    return {
-        id: id,
-        name: "name",
-        active: true
-    }
-};
 
 function getId(user: User): number {
 
@@ -41,14 +33,6 @@ function getUserNames(users: User[], product: Product): string[] {
 // type GetNameType = string
 type GetNameType = ReturnType<typeof getName>;
 
-/*
-type GetUserType = {
- id: number;
- name: string;
- active: boolean;
-}
-*/
-type GetUserType = ReturnType<typeof getUser>;
 
 // type GetIdType = number
 type GetIdType = ReturnType<typeof getId>;
@@ -61,14 +45,14 @@ type GetUserNamesTypes = ReturnType<typeof getUserNames>;
 
 type GetNameParameterTypes = Parameters<typeof getName>;
 
-type GetUserParameterTypes = Parameters<typeof getUser>;
-
 type GetIdParameterTypes = Parameters<typeof getId>;
 
 type GetUserNamesParameterTypes = Parameters<typeof getUserNames>;
 
 // type GetUserNamesFirstParameterType = User[]
-// holen hier mit [0] nach dem holen der Parametertypen den Typ des ersten Parameters, da es nur ein Parameter gibt, was eben User[] ist
+// Mit [0] greifen wir auf den ersten Typ des Parameter-Tuples zu.
+// Da der erste Parameter `users: User[]` ist,
+// entsteht der Typ User[].
 type GetUserNamesFirstParameterType = Parameters<typeof getUserNames>[0];
 
 // type GetUserNamesSeperateParameterType = User[] | Product
@@ -81,9 +65,270 @@ type GetUserNamesSeperateParameterType = Parameters<typeof getUserNames>[number]
 // 3.
 
 async function getUser(id: number): Promise<User> {
-    
+    return {
+        id,
+        name: "Lukas",
+        active: true
+    };
+}
 
+/*
+type GetUserType = (id: number) => Promise<User>
+*/
+// hier entsteht logischerweise der Funktionstyp in Form von "(parameter) => rückgabetyp", weil wir mit typeof getUser diese holen
+type GetUserType = typeof getUser;
+
+// type GetUserTypeReturn = Promise<User>
+// hier entsteht der Typ Promise<User>, weil wir mit ReturnType, was Conditional Types und infer nutzt, den Rückgabetyp der Funktion holen
+type GetUserTypeReturn = ReturnType<typeof getUser>;
+
+/*
+type GetUserTypeAwaited = {
+ id: number;
+ name: string;
+ active: boolean;
+}
+*/
+// ist Typ User, VSC zeigt nur Shape an, Awaited holt den Typ innerhalb eines Promise, auch wenn verschachtelt also kann mehrere Ebenen tief gehen,
+// deshalb funktioniert hier auch ReturnType<typeof getUser>, holt eigentlich nur Promise<User> wie oben schon, aber Awaited holt noch den inneren
+// Typ aus dem Promise
+type GetUserTypeAwaited = Awaited<ReturnType<typeof getUser>>;
+
+
+
+
+// 4.
+
+async function getUsers(activeOnly: boolean, limit: number): Promise<User[]> {
+
+    return [];
+}
+
+// Parameter-Tuple:
+// typeof nicht vergessen, brachen Funktionstyp von getUsers für Utility Type Parameters<T>!
+type GetUsersParameterTuples = Parameters<typeof getUsers>;
+
+// Direkter Rückgabetyp:
+// type GetUsersDirectReturnType = Promise<User[]>
+type GetUsersDirectReturnType = ReturnType<typeof getUsers>;
+
+// Aufgelöster Rückgabetyp:
+// type GetUsersResolvedReturnType = User[]
+type GetUsersResolvedReturnType = Awaited<ReturnType<typeof getUsers>>;
+// oder so:
+// gibt auch type GetUsersResolvedReturnTypeDiff = User[]
+type GetUsersResolvedReturnTypeDiff = Awaited<GetUsersDirectReturnType>;
+
+// Typ eines einzelnen Elements aus dem aufgelösten Typ:
+/*
+type GetUsersSeperateElement = {
+ id: number;
+ name: string;
+ active: boolean;
+} --> = Typ User
+*/
+type GetUsersSeperateElement = Awaited<ReturnType<typeof getUsers>>[number];
+//oder so:
+type GetUsersSeperateElementTwo = Awaited<GetUsersDirectReturnType>[number];
+// oder so:
+type GetUsersSeperateElementThree = GetUsersResolvedReturnTypeDiff[number];
+
+
+// 5.
+
+type UserDraft = {
+    id?: number;
+    name?: string;
+    active?: boolean;
 };
+
+/*
+type UserDraftRequired = {
+ id: number;
+ name: string;
+ active: boolean;
+}
+--> alle ? sind entfernt, somit die Properties nicht mehr optional sondern erforderlich
+*/
+type UserDraftRequired = Required<UserDraft>;
+
+
+// 6.
+
+/*
+type UserReadonly = {
+ readonly id: number;
+ readonly name: string;
+ readonly active: boolean;
+}
+--> bei jeder Property wurde vor dem Key ein readonly hinzugefügt, somit sind Properties nurnoch lesbar und nicht veränderbar nach der Inisialisierung
+// des Typen
+*/
+type UserReadonly = Readonly<User>;
+
+// Initialiserung geht natürlich noch, aber Veränderung der hier gesetzten Properties nicht
+const user01: UserReadonly = {
+
+    id: 2,
+    name: "Anna",
+    active: true
+}
+
+// Fehler: Cannot assign to 'name' because it is a read-only property.
+// Da user01 vom Typ UserReadonly und darin alle Properties readonly sind, kann man diese hier nach der Initialisierung nicht mehr verändern
+// Also die Mutation aller Properties wird von TypeScript verhindert, da alle readonly sind
+//user01.name = "Peter";
+
+// Achtung: Readonly<T> ist kein Runtime-Schutz.
+// Es verhindert Mutationen nur durch das TypeScript-Typsystem.
+//
+// Für tatsächliches Runtime-Verhalten wäre z.B.
+// Object.freeze(...) relevant.
+//
+// Type Guards haben eine andere Aufgabe:
+// Sie prüfen bzw. narrowen Runtime-Werte.
+
+
+// 7.
+
+type Status =
+    | "idle"
+    | "loading"
+    | "success"
+    | "error";
+
+// Exclude und Extract haben zwei Argumente, einmal der Typ der als Basis für Operation gedacht ist und die Elemente, die nicht mehr im neuen Typ sein sollen (Exclude)
+// oder die nur im neuen Typ sein sollen (Extract)
+// type StatusExclude = "success" | "error"
+// --> "idle" und "loading" wurden entfernt im neuen Typ StatusExclude, da sie hier als zweites Argument als Union angegeben wurden
+type StatusExclude = Exclude<Status, "idle" | "loading">;
+
+// type StatusExtract = "success" | "error"
+// --> "idle" und "loading" wurden entfernt/nicht beibehalten im neuen Typ StatusExtract, da hier als zweites Argument 
+// als Union nur "success" und "error" angegeben wurden und nur diese dann in den neuen Typ gepackt werden 
+type StatusExtract = Extract<Status, "success" | "error">;
+
+
+// 8.
+
+type ApiValue =
+    string
+    | number
+    | null
+    | undefined;
+
+type ApiValueNonNullable = NonNullable<ApiValue>;
+
+
+// 9.
+
+// bei false-Zweig T als resultierenden Typ nehmen, weil es T ja Union ist, und jeder Member einzeln geprüft wird und T somit der aktuell
+// geprüfte Member ist, und wird ja dann auch als Union und als Member returned, deswegen nicht U als Typ returnen sondern T
+type MyExclude<T, U> = 
+    T extends U
+        ? never
+        : T
+
+// auch hier bei true-Zweig T als resultierenden Typ nehmen aus gleichem Grund
+type MyExtract<T, U> = 
+    T extends U
+        ? T
+        : never
+
+// auch hier T als resultierenden Typ nehmen, hier gibt es sowieso nur T und kein U
+type MyNonNullable<T> = 
+    T extends null | undefined 
+        ? never
+        : T
+
+
+// 10.
+
+class UserService {
+    constructor(public baseUrl: string) {}
+}
+
+// Achtung: typeof nicht vergessen! Braucht Klassentyp mit Konstruktor
+type UserServiceInstance = InstanceType<typeof UserService>;
+
+const userService01: UserServiceInstance = new UserService("https:yes.com");
+
+
+
+// 11.
+
+async function fetchProducts(): Promise<Product[]> {
+
+    return [];
+}
+
+// Promise<Product[]>:
+// type FetchProductsPromiseProduct = Promise<Product[]>
+type FetchProductsPromiseProduct = ReturnType<typeof fetchProducts>;
+
+// Product[]:
+// type FetchProductsProductArray = Product[]
+type FetchProductsProductArray = Awaited<ReturnType<typeof fetchProducts>>;
+// oders so:
+type FetchProductsProductArrayTwo = Awaited<FetchProductsPromiseProduct>;
+
+// Product:
+/*
+type FetchProductsProductTwo = {
+ id: number;
+ title: string;
+ price: number;
+} --> Product
+*/
+type FetchProductsProduct = Awaited<ReturnType<typeof fetchProducts>>[number];
+// oder so:
+/*
+type FetchProductsProductTwo = {
+ id: number;
+ title: string;
+ price: number;
+} --> Product
+*/
+type FetchProductsProductTwo = Awaited<FetchProductsPromiseProduct>[number];
+
+
+
+// 12.
+
+/*
+Mapped Types:
+- Required<T>
+- Readonly<T>
+
+Conditional Types:
+- Exclude<T, U>
+- Extract<T, U>
+- ReturnType<T>
+- Parameters<T>
+- Awaited<T>
+- InstanceType<T>
+
+Conditional Types mit infer:
+- ReturnType<T>
+- Parameters<T>
+- Awaited<T>
+- InstanceType<T>
+
+Distributive Conditional Types:
+- Exclude<T, U>
+- Extract<T, U>
+*/
+// Unterschied zwischen ReturnType und Awaited: ReturnType gibt als Typ den Rückgabetyp einer Funktion/eines Funktionstypen zurück, auch 
+// wenn dieser ein Promise ist, dann eben als Typ genau diesen Rückgabetyp Promise<...>, Awaited löst wenn der Funktionsrückgabetyp ein
+// Promise ist den inneren Typ innerhalb des Promises zurück. Man braucht aber das ReturnType<T> innerhalb des Awaited<T>, also
+// Awaited<typeof getUser> bringt nicht User also den inneren Typ des Rückgabetyps automatisch zurück, wenn der Rückgabetyp ein Promise<User> ist. Man bräuchte also Awaited<ReturnType<typeof getUser>>
+// um User zu bekommen, nur mit Awaited<typeof getUser> würde man nur (id: number) => Promise<User> bekommen, da es nicht den Return Type bringt sondern nur den Funktionstyp
+// mit diesem Aufruf. Außerdem löst Awaited<T> auch verschachtelte Promises bis auf den innersten Typ auf.
+// Unterschied zwischen Exclude und Extract: Exclude<T, U> entfernt aus T alle Union-Mitglieder, die zu U kompatibel sind. Extract<T, U> behält 
+// aus T nur die Union-Mitglieder, die zu U kompatibel sind.
+
+
+
 
 
 

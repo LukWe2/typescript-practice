@@ -1,5 +1,135 @@
+// 1.
+
+type IsString<T> = 
+    T extends string
+        ? true
+        : false
+
+// type IsStringString = true
+// Die Condition "T extends string" prüft hier "string extends string", weil T für IsString<T> als string eingesetzt wurde (IsString<string>),
+// diese ist true und gehen somit in "? true"-Zweig, somit finaler Typ type IsStringString = true;
+type IsStringString = IsString<string>;
+
+// type IsStringNumber = false
+type IsStringNumber = IsString<number>;
+
+// type IsStringStringNumber = boolean
+// Hier wird der Typ boolean, weil für die Union string | number die Members string und number einzeln für die Condition
+// "T extends string" geprüft werden und auch als Union wieder returned werden.
+// Somit erste Prüfung: "string extends string" -> true -> somit in "? true"-Zweig -> Typ: string
+// Zweite Prüfung: "number extends string" -> false -> somit in ": false"-Zweig -> Typ: false
+// Finaler als Union zusammengesetzter Typ (weil T auch eine Union war): type IsStringStringNumber = true | false -> boolean
+type IsStringStringNumber = IsString<string | number>;
 
 
+// 2.
+
+// Dieser Conditional Type behält aus einer Union nur String-Typen, weil wir für jedes T wenn es eine Union ist prüfen,
+// ob der jeweilige Union-Member T ein string ist, wenn ja returnen wir im "? T"-Zweig für true das was für T gerade geprüft wird
+// Achtung: Wir teilen hier gezielt T zu und nicht nur string, damit Literals wie unten im Beispiel erhalten bleiben, denn T
+// wenn es eine Union ist kann entweder den allgemeinen Typ string (wie beim ersten Beispiel unten) oder auch Literal Strings (wie im zweiten unten)
+// enthalten und wenn man statt T hier string zuteilt im true-Zweig, wird für diese nur string genommen und nicht "admin" oder "user"
+// Der finale Typ mit "? string" wäre dann type OnlyStringsTypesAndLiterals = string, weil komplett ausgeschrieben wäre er
+// type OnlyStringsTypesAndLiterals = string | never | string | never, never fällt weg und string wird nur einmal geschrieben, deswegen 
+// nur type OnlyStringsTypesAndLiterals = string
+type OnlyStrings<T> = 
+    T extends string
+        ? T
+        : never
+
+// type OnlyStringsJustTypes = string
+type OnlyStringsJustTypes = OnlyStrings<string | number | boolean>;
+
+// type OnlyStringsTypesAndLiterals = "admin" | "user"
+type OnlyStringsTypesAndLiterals = OnlyStrings<"admin" | 5 | "user" | false>;
+
+
+// 3.
+
+// Dieser Conditional Type ist ein Distributive Conditional Type, weil er die Union, die für T eingesetzt wird (hier Status)
+// einzeln jeden Member der Union also jeden Literal String prüft, ob dieser U, also der Typ der für den zweiten Generic angegeben wird,
+// erfüllt. 
+// Wenn ja, wird als Typ für diesen Member never zurückgegeben in den finalen Ergebnistyp, der auch als Union erstellt wird.
+// Wenn der Union-Member nicht U erfüllt, wird der Member als Typ zurückgegeben, also behalten.
+// Im finalen Ergebnisteil fallen dann alle Member für die never zugeteilt wurden weg und die die erfüllt haben deren Wert als Literal Type.
+type MyExclude<T, U> = 
+    T extends U
+        ? never
+        : T
+
+type Status =
+    "idle"
+    | "loading"
+    | "success"
+    | "error";
+
+// type StatusExcludeIdleAndLoading = "success" | "error"
+// geben als T den Literal Union Type Status an, für U den Literal Union Type "idle" | "loading"
+// Somit wird für "idle" und "loading" einzeln geprüft ob diese die Condition "T extends U" erfüllen also z.B. ""idle" extends "idle" | "loading"", das wäre true, heißt
+// im Ergebnistyp bekommt dieser Member den Typ never und fällt somit final weg. Für den Member "success" wäre die Condition ""success" extends "idle" | "loading""
+// false, somit wird für diesen Member dieses Literal (wegen dem "? T"-Zweig) auch in den finalen Ergebnistyp eingefügt.
+// Der finale Typ wäre somit type StatusExcludeIdleAndLoading = never | never | "success" | "error", da die never wegfallen dann final type StatusExcludeIdleAndLoading = "success" | "error"
+type StatusExcludeIdleAndLoading = MyExclude<Status, "idle" | "loading">;
+
+
+// 4.
+
+// Dieser Conditional Type ist ein Distributive Conditional Type, weil er die Union, die für T eingesetzt wird (hier Status)
+// einzeln jeden Member der Union also jeden Literal String prüft, ob dieser U, also der Typ der für den zweiten Generic angegeben wird,
+// erfüllt. 
+// Wenn ja, wird als Typ für diesen Member wird der Member als Typ zurückgegeben, also behalten und in den finalen Ergebnistyp als genau diesen Typen eingefügt, der auch als Union erstellt wird.
+// Wenn der Union-Member nicht U erfüllt, wird der Typ für diesen Member als never zurückgegeben.
+// Im finalen Ergebnisteil fallen dann alle Member für die never zugeteilt wurden weg und die die erfüllt haben deren Wert als Literal Type.
+type MyExtract<T, U> =
+    T extends U
+        ? T
+        : never
+
+// type StatusExtractSuccessAndError = "success" | "error"
+// geben als T den Literal Union Type Status an, für U den Literal Union Type "success" | "error"
+// Somit wird für "success" und "error" einzeln geprüft ob diese die Condition "T extends U" erfüllen.
+// Für den ersten Member, "success" ist die Condition "T extends U" also ""success" extends "success" | "error"" true, somit wird für diesen T, also genau dieser Member als Literal Type eingefügt
+// in den finalen Ergebnistyp.
+// Für den zweiten Member "error" ist die Condtion auch true und wird als weiterer Member in die Union des Ergebnistyps eingefügt.
+// Für die ersten und zweiten Member, ist die Condition false, somit wird never für die Typen zurückgegeben und fallen weg.
+// Der finale Typ wäre somit type StatusExtractSuccessAndError = never | never | "success" | "error", da die never wegfallen dann final type StatusExtractSuccessAndError = "success" | "error"
+type StatusExtractSuccessAndError = MyExtract<Status, "success" | "error">
+
+
+
+// 5.
+
+type MyNonNullable<T> = 
+    T extends null | undefined
+        ? never
+        : T
+
+// type NonNullableExample = string | number
+// Hier wird der jeweilige Member T immer mit null | undefined geprüft, also wenn es einer der beiden ist, dann true (für diese Member wird dann Typ never in Ergebnistyp-Union eigefügt), 
+// wenn keiner der beiden, dann false (und Member wird in Ergebnistyp-Union eingefügt)
+type NonNullableExample = MyNonNullable<string | number | null | undefined>;
+
+
+// 6.
+
+// nimmt hier als Typ für Condition unknown, da fast alle Typen diese Prüfung in true gehen, da man die Daten eher transformieren will, als prüfen
+// Wenn true, wird daher dann ein Array-Typ (kein Array-Bbjekt, sondern -Typ!) aus dem Typ der gerade aus dem Union T dran ist erstellt
+// Achtung: ist nicht dasselbe wie wenn der Ergebnistyp gleich (string | number)[] wäre (dafür müsste T gleich [T] sein und für T eingesetzt auch [string | number] sein),
+// da dann nicht zwei Arrays mit entweder Elementen nur vom Typ string oder nur vom Typ number herausgekommen wäre, sondern ein Array mit Elementen vom Typ ODER string
+type ToArray<T> = 
+    T extends unknown
+        ? T[]
+        : never
+
+// type ToArrayStringNumber = string[] | number[]
+type ToArrayStringNumber = ToArray<string | number>;
+
+
+// 7.
+
+type Distributive<T> =
+    T extends string
+        ? 
 
 
 
