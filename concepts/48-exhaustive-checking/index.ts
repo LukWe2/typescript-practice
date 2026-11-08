@@ -1,43 +1,302 @@
+// 1.
+
+type Role =
+    "admin"
+    | "editor"
+    | "viewer";
+
+
+function getRoleLabel(role: Role): string {
+
+    switch(role) {
+
+        case "admin":
+            return "Admin";
+        case "editor":
+            return "Editor";
+        case "viewer":
+            return "Viewer";
+        default:
+            return assertNever(role);
+    }
+}
+
+function assertNever(role: never): never {
+
+    throw new Error('Unexpected value: $(value)');
+}
+
+
+// 2.
+
+// Fehler wenn man "moderator" ergänzt: Argument of type '"moderator"' is not assignable to parameter of type 'never'.
+// -> TypeScript narrowed alle Typen im Union Typ Role, "moderator" ist am Ende übrig und nicht wie gewollt "kein Typ", was der Typ never ist
+// somit wird assertNever mit "role: "moderator"" aufgerufen und nicht "role: never", somit wird Fehler geworfen
+
+type Role2 =
+    "admin"
+    | "editor"
+    | "viewer"
+    | "moderator";
+
+
+function getRoleLabel2(role: Role2): string {
+
+    switch(role) {
+
+        case "admin":
+            return "Admin";
+        case "editor":
+            return "Editor";
+        case "viewer":
+            return "Viewer";
+        case "moderator":
+            return "Moderator";
+        default:
+            return assertNever2(role);
+    }
+}
+
+function assertNever2(role: never): never {
+
+    throw new Error('Unexpected value: $(value)');
+}
+
+
+// 3.
+
+type Shape =
+    | {
+        kind: "circle";
+        radius: number;
+    }
+    | {
+        kind: "square";
+        size: number;
+    };
+
+
+    function calculateArea(shape: Shape): number {
+
+        if (shape.kind === "circle"){
+
+            return shape.radius * 2
+        }
+
+        if (shape.kind === "square"){
+
+            return shape.size * 2;
+        }
+
+        return assertNever(shape);
+    }
 
 
 
+// 4.
+
+type Shape2 =
+    | {
+        kind: "circle";
+        radius: number;
+    }
+    | {
+        kind: "square";
+        size: number;
+    }
+    | {
+        kind: "rectangle";
+        width: number;
+        height: number;
+    }
+
+// Fehler wie oben, TypeScript narrowed die Typen des Union Typs Shape2 in calculateArea2, am Ende bleibt aber nicht never übrig sondern "{kind: "rectangle", width: number, height: number}"
+// Argument of type '{ kind: "rectangle"; width: number; height: number; }' is not assignable to parameter of type 'never'.
+    function calculateArea2(shape: Shape2): number {
+
+        if (shape.kind === "circle"){
+
+            return shape.radius * 2
+        }
+
+        if (shape.kind === "square"){
+
+            return shape.size * 2;
+        }
+
+        if (shape.kind === "rectangle"){
+            
+            return shape.width * shape.height;
+        }
+
+        return assertNever(shape);
+    }
 
 
 
+// 5.
+
+type ApiState<T> =
+    | {
+        status: "idle";
+    }
+    | {
+        status: "loading";
+    }
+    | {
+        status: "success";
+        data: T;
+    }
+    | {
+        status: "error";
+        error: string;
+    };
+
+
+function getApiStateText<T>(state: ApiState<T>): string {
+
+    switch(state.status) {
+
+        case "idle":
+            return "Idle";
+        case "loading":
+            return "Loading";
+        case "success":
+            return "Success";
+        case "error":
+            return "Error";
+        default:
+            return assertNever(state);
+    }
+}
+
+
+// 6.
+
+type ApiState2<T> =
+    | {
+        status: "idle";
+    }
+    | {
+        status: "loading";
+    }
+    | {
+        status: "success";
+        data: T;
+    }
+    | {
+        status: "error";
+        error: string;
+    }
+    | {
+        status: "cancelled";
+    };
+
+
+// Fehler wenn case "cancelled" fehlt: Argument of type '{ status: "cancelled"; }' is not assignable to parameter of type 'never'.
+// Das übergebene Argument für assertNever() ist also nicht vom Typ never wie es aber laut "function assertNever(role: never): never { ... }" haben soll,
+// sondern "role: "cancelled""
+
+function getApiStateText2<T>(state: ApiState2<T>): string {
+
+    switch(state.status) {
+
+        case "idle":
+            return "Idle";
+        case "loading":
+            return "Loading";
+        case "success":
+            return "Success";
+        case "error":
+            return "Error";
+        case "cancelled":
+            return "Cancelled";
+        default:
+            return assertNever(state);
+    }
+}
 
 
 
+// 7.
+
+type Action =
+    | {
+        type: "increment";
+    }
+    | {
+        type: "decrement";
+    }
+    | {
+        type: "set";
+        value: number;
+    };
+
+
+function reducer(state: number, action: Action): number {
+
+    switch (action.type){
+
+        case "increment":
+            return state + 1;
+        case "decrement":
+            return state - 1;
+        case "set":
+            return action.value;
+        default:
+            return assertNever(action);
+    }
+}
 
 
 
+// 8.
+
+type ApiState3<T> =
+    | {
+        status: "idle";
+    }
+    | {
+        status: "loading";
+    }
+    | {
+        status: "success";
+        data: T;
+    }
+    | {
+        status: "error";
+        error: string;
+    }
+    | {
+        status: "cancelled";
+    };
+
+
+function getApiStateText3<T>(state: ApiState2<T>): string {
+
+    switch(state.status) {
+
+        case "idle":
+            return "Idle";
+        case "loading":
+            return "Loading";
+        case "success":
+            return "Success";
+        case "error":
+            return "Error";
+        case "cancelled":
+            return "Cancelled";
+        default:
+            const exhaustiveCheck: never = state;
+            return exhaustiveCheck;
+    }
+}
 
 
 
+// 9.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Siehe Verständnisfragen unten
 
 
 
