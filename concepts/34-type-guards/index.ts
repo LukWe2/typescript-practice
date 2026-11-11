@@ -1,4 +1,49 @@
 // 34 – Type Guards / Type Predicates
+
+// ACHTUNG: Immer unterscheiden, was zur Compile Time VOR der Runtime passiert und was erst bei der tatsächlichen Runtime-Ausführung passiert!
+//
+// TypeScript analysiert zur Compile Time auch den Funktionsbody des Type Guards bzw. der Assertion Function aus Sicht des Typsystems.
+//
+// Es prüft z.B.:
+// - ob auf einem Typ erlaubte Methoden aufgerufen werden,
+// - ob Zuweisungen typkompatibel sind,
+// - ob durch if/typeof usw. innerhalb der Funktion genarrowed werden kann,
+// - ob Rückgabewerte zum deklarierten Rückgabetyp passen.
+//
+// Beispiel:
+//
+// if (typeof value === "string") {
+//     value.toUpperCase(); // ✅
+//     value.toFixed(2);    // ❌ Compile-Time-Typfehler
+// }
+//
+// ABER:
+// Dieses Narrowing bzw. die Typprüfung innerhalb des Funktionsbodys ist NICHT der Grund dafür, dass beim Aufrufer später `value` als string behandelt wird.
+//
+// Bei einem Type Guard ist dafür die Type-Predicate-Signatur verantwortlich:
+//
+// value is string
+//
+// Sie sagt TypeScript:
+//
+// "Wenn diese Funktion true zurückgibt, behandle das geprüfte Argument in diesem Codepfad als string."
+//
+// Bei einer Assertion Function ist entsprechend:
+//
+// asserts value is string
+//
+// dafür verantwortlich.
+//
+// Sie sagt TypeScript:
+//
+// "Wenn diese Funktion normal zurückkehrt, behandle das Argument danach als string."
+//
+// TypeScript überprüft NICHT logisch, ob der Funktionsbody diese Behauptung wirklich korrekt beweist.
+//
+// Deshalb könnte der Runtime-Check sogar falsch implementiert sein, und TypeScript würde aufgrund von `value is string` bzw. `asserts value is string` trotzdem entsprechend narrowen.
+//
+// Der Funktionsbody soll zur Runtime dafür sorgen, dass dieses Typversprechen tatsächlich der Realität entspricht.
+
 // Behandle externe bzw. unbekannte Daten zunächst als unknown und erstelle einen eigenen Type Guard isUser(value: unknown): value is User.
 // Prüfe zur Runtime zuerst, ob der Wert wirklich ein nicht-null Objekt ist, und kontrolliere danach sowohl das Vorhandensein aller erforderlichen Properties als auch deren tatsächliche Runtime-Typen.
 // Teste den Guard mit gültigen User-Daten, ungültigen Objekten und komplett anderen unknown-Werten; greife erst nach erfolgreichem Guard sicher auf User-Properties zu.
