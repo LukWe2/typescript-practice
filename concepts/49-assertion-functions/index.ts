@@ -194,6 +194,311 @@
 
 
 
+// 1.
+
+function assertString(value: unknown): asserts value is string {
+
+    if (typeof value !== "string"){
+
+        throw new Error("Expected string");
+    }
+}
+
+// const potentialString: unknown
+const potentialString: unknown = "word";
+
+assertString(potentialString);
+
+// const potentialString: string
+potentialString;
+
+
+// 2.
+
+// bei Type Guard für Objekt, sowohl Typ mit typeof value === "object" und ob die Properties enthalten sind mit z.B. "name" in value && typeof(value.name) === "string"
+function isNumber(value: unknown): value is number {
+
+    if (typeof value === "number"){
+
+        return true;
+    }
+
+    return false;
+}
+
+function assertNumber(value: unknown): asserts value is number {
+
+    if (typeof value !== "number"){
+
+        throw new Error("Expected number");
+    }
+}
+
+// Einen Type Guard benutzt man besser, wenn man zwischen mehreren gültigen Fällen unterscheiden will bzw. auch den false-Zweig wenn der Typ nicht passt.
+// Eine Assertion Function, wenn ein bestimmter Typ zwingend Voraussetung ist und der ungültige Fall den normalen Ablauf abbrechen soll (weil es ein Fehler wirft).
+
+
+// 3.
+
+type User = {
+    id: number;
+    name: string;
+};
+
+function assertUser(value: unknown): asserts value is User {
+
+    if (typeof value !== "object" || value === null || !("id" in value) || typeof value.id !== "number" || !("name" in value) || typeof value.name !== "string"){
+
+        throw new Error("Invalid value");
+    } 
+}
+
+
+// 4.
+
+const data: unknown = {
+
+    id: 1,
+    name: "Lukas"
+}
+
+// const data: unknown
+assertUser(data);
+
+// const data1id: number
+const data1id = data.id;
+
+// const data1name: string
+const data1name = data.name;
+
+// Das Zugreifen auf die Properties von data wäre vor der Assertion Funktion nicht möglich, weil data hier noch vom Typ unknown und nicht User wäre. Deshalb würde TypeScript den Aufruf
+// nicht erlauben. Erst wenn die Assertion Funktion durchgelaufen ist und zur Typ- bzw. Compilezeit TypeScript data als vom Typ User behandeln darf können wir auf die zugreifen. Zur Runtime
+// wird ja zusätzlich geprüft ob data wirklich vom Typ User ist, also man sagt auf Typebene TypeScript mit der Assertion Funktion dass wenn diese durchläuft data vom Typ User ist,
+// und prüft es zur Runtime dann "wirklich".
+
+
+// 5.
+
+function assertDefined<T>(value: T): asserts value is NonNullable<T> {
+
+    if (value !== null || value !== undefined){
+
+        throw new Error("value is null or undefined");
+    }
+};
+
+const value01: string | undefined = "value 01";
+
+// TypeScript narrowed hier eigentlich schon auf Typ string für value01 auch one Assertion Funktion
+
+assertDefined(value01);
+
+// const value01: string
+value01;
+
+
+const user02: User | undefined = {
+
+    id: 2,
+    name: "Anna"
+}
+
+// const user01: User
+assertDefined(user02);
+
+// const user01: User
+user02;
+
+
+const number01: number | null | undefined = 2;
+
+// const number01: number
+assertDefined(number01);
+
+// const number01: number
+number01;
+
+// bei diesen drei kann TypeScript aufgrund des konkreten const-Werts teilweise ohnehin schon wissen, dass hier gerade ein String vorliegt, dieses Beispiel für eine Verwendung ist besser in einer anderen Funktion:
+// wo man einem Wert nicht direkt einen Typ zuweist sondern der Parameter der Funktion noch beides sein kann
+function printName(name: string | undefined) {
+    // name: string | undefined
+
+    assertDefined(name);
+
+    // name: string
+    name.toUpperCase();
+}
+
+
+// 6.
+
+const user03: User = {
+
+    id: 3,
+    name: "Peter"
+}
+
+const users: User[] = [data, user02, user03];
+
+const foundUser = users.find(user => user.id === 2);
+
+// const foundUser: User | undefined
+assertDefined(foundUser);
+
+// const foundUser: User
+console.log(foundUser.name);
+
+
+
+// 7.
+
+// const foundUser2: User | undefined
+const foundUser2 = users.find(user => user.id === 2);
+
+console.log(foundUser2!.name);
+
+// Auch hier ist: const foundUser2: User nach foundUser2!.name, also wir sagen TypeScript damit auch, dass hier foundUser als User behandelt werden soll auf Typeebene so wie bei der Assertion Function. Aber bei dieser
+// haben wir noch einen Runtime Check im Funktionsbody, der auch die Typebene beeinflusst weil TypeScript auch diese prüft. Ausschlaggebend ist aber die Assertion Signature asserts value is NonNullable<T>
+// die wie das ! sagt, dass TypeScript dieses Objekt als vom Typ User behandeln soll. Nur der Runtime Check ist bei der Assertion Function zusätzlich mit drin.
+
+
+
+// 8.
+
+// Allgemeine Assertion Function:
+// Wenn `condition` zur Runtime falsy ist, wird ein Error geworfen.
+// Wenn die Funktion normal zurückkehrt, sagt `asserts condition` TypeScript:
+// "Die übergebene Bedingung darf ab hier als wahr angenommen werden."
+function assert(condition: unknown): asserts condition {
+
+    if (!condition) {
+        throw new Error("Condition is false");
+    }
+}
+
+
+// Dieses Beispiel ist als reine Typ-Demonstration problematisch,
+// weil `name` zwar den Typ `string | undefined` hat,
+// aber noch keinen konkreten Wert zugewiesen bekommen hat.
+let name: string | undefined;
+
+// Zur Compile Time analysiert TypeScript:
+// Falls `assert(...)` normal zurückkehrt,
+// muss `name !== undefined` wahr sein.
+//
+// Deshalb narrowt TypeScript `name` danach von
+// `string | undefined` auf `string`.
+assert(name !== undefined);
+
+// TypeScript behandelt `name` hier als string.
+name;
+
+
+// WICHTIG:
+// Zur tatsächlichen Runtime ist `name` hier aber noch `undefined`,
+// weil wir vorher keinen Wert zugewiesen haben.
+//
+// Deshalb wird zur Runtime tatsächlich:
+//
+// name !== undefined
+//
+// zu:
+//
+// false
+//
+// und `assert(false)` wirft einen Error.
+//
+// Das Beispiel zeigt also korrekt das Compile-Time-Narrowing,
+// ist aber kein sinnvolles Runtime-Beispiel,
+// weil die Assertion bei echter Ausführung immer fehlschlagen würde.
+
+
+
+// 9.
+
+// `config` ist bereits vom Typ `Config` und nicht wie sonst dass der Parameter vom Typ unknown ist; geprüft wird hier also nicht, ob es überhaupt ein Config ist.
+// Unsicher ist nur `config.apiUrl`, weil es wegen `apiUrl?: string` den Typ `string | undefined` hat.
+// Die Runtime-Prüfung wirft einen Fehler, wenn `apiUrl` tatsächlich `undefined` ist.
+// `asserts config is Config & { apiUrl: string }` narrowt `config` danach auf einen Config-Typ mit garantiertem `apiUrl: string`.
+type Config = {
+    apiUrl?: string;
+};
+
+function assertHasApiUrl(config: Config): asserts config is Config & {apiUrl: string}
+{
+
+    if (config.apiUrl === undefined) {
+
+        throw new Error("Missing apiUrl");
+    }
+};
+
+
+// 10.
+
+function assertNonEmpty<T>(values: T[]): asserts values is [T, ...T[]] {
+
+    if (values.length === 0){
+
+        throw new Error("values is of length 0");
+    }
+};
+
+// [T, ...T[]] ist ein Tuple-Typ für ein nicht-leeres Array, bedeutet erstes Element: muss vom Typ T vorhanden sein und danach: 0 bis beliebig viele weitere Elemente vom Typ T
+// Beispiel mit T = string: type NonEmptyStrings = [string, ...string[]];
+// TypeScript kann danach garantieren bzw. man versichtert TypeScript zur Typzeit, dass values[0] existiert also das Array nicht leer ist und es mindestens ein Element gibt
+// Zur Runtime wird das dann tatsächlich geprüft
+
+
+// 11.
+
+async function getUser(): Promise<User> {
+
+    const externalUserData: unknown = {
+
+        id: 4,
+        name: "Lisa"
+    };
+
+    // const externalUserData: unknown
+    assertUser(externalUserData);
+
+    // hat jetzt auf Typebene TypeScript mit Assertion Signature asserts value is User gesagt, dass es als vom Typ User behandelt werden soll. Zur Runtime prüft man dann tatsächlich (bzw. der Funktionsbody)
+    // wird ja auch von TypeScript vor der Runtime zur Compile Time geprüft, aber das ist nicht warum externalUserData hier vom Typ User ist, aber würde auch zur Compile Time Fehler werfen wenn in Runtime
+    // Prüfung ein Fehler ist.
+
+    // const externalUserData: User
+    return externalUserData;
+}
+
+
+
+// 12.
+
+/*
+function badAssertUser(value: unknown): asserts value is User {
+
+    
+}
+*/
+
+// auch so eine leere oder falsch implementierte Assertion Function macht, dass value nachdem die Assertion Function aufgerufen wird als vom Typ User von TypeScript zur Compile Time behandelt wird
+// und keinen Fehler wirft bei Property- oder Funktionsaufrufen obwohl value nicht vom Typ User ist. Das geht, weil wir mit der Assertion Singature asserts value is User TypeScript sagen, dass value
+// wenn die Funktion durchläuft (was eben auch bei einer leeren oder falschen der Fall) ist, dass dann value vom Typ User ist, bzw. das wird einfach dadurch so, weil dann kein Compile Fehler aufkommt,
+// danach wird auf der Typebene value vom Typ User behandelt. Die Runtime Prüfung ist davon ja erstmal unabhängig, diese wird erst zur Runtime ausgeführt während TypeScript vorher zur Compile Time ja
+// schon die Typenchecks macht. Obwohl der Funktionsbody und somit die Runtime Checks (wenn richtig implementiert) die Typprüfung zur Compile Time beeinflussen also TypeScript prüft auch diese,
+// aber sie ist nicht verantwortlich dafür, dass value als User danach behandelt wird, die Prüfung von TypeScript vom Funktionsbody kann höchstens schon Compile Fehler geben wenn falsche Funktionen aufgerufen
+// werden aber prüft eben nicht ob value wirklich vom Typ User ist, das sagt man TypeScript mit der Assertion Singature sozusagen einfach
+
+
+// 13.
+
+// Siehe Verständnisfragen
+
+
+
+
+
 
 
 
