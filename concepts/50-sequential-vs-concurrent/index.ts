@@ -33,38 +33,186 @@
 
 
 
+// 1.
+
+function delay(ms: number): Promise<void> {
+
+    return new Promise<void>((resolve) => {
+
+        setTimeout(() => {resolve()}, ms);
+    });
+}
+
+
+// 2.
+
+async function getUser(): Promise<string> {
+
+    await delay(2000);
+
+    // async Funktionen returnen immer automatisch einene Promise, also auch wenn hier ein String nach return steht
+    return "Lukas";
+}
+
+
+// 3.
+
+async function getProducts(): Promise<string[]> {
+
+    await delay(3000);
+
+    return ["Milch", "Eier"];
+}
+
+
+// 4.
+
+async function loadSequential(): Promise<void> {
+
+    // sollen direkt awaiten, heißt Erstellen des Promise und awaiten am besten direkt in eine Zeile, nicht wie hier erst Promise erstellen und dann awaiten:
+    //const userPromise = getUser();
+    // const user = await userPromise;
+
+    console.time("sequential");
+
+    const user = await getUser();
+
+    const products = await getProducts();
+
+    console.log(`User: ${user}`);
+    console.log(`Products: ${products}`);
+
+    console.timeEnd("sequential");
+}
+
+// 5.
+
+// Sie werden sequentiell ausgeführt, weil erst das Promise mit getUser() erstellt wird für den User und dann BEVOR das Promise für die Produkte mit getProducts() gestartet wird auf das
+// User-Promise gewartet wird. Erst wenn dieses erfüllt ist wird eben das Promise für die Produkte gestartet und auch darauf gewartet. 
 
 
 
+// 6.
+
+async function loadConcurrent(): Promise<void> {
+
+    console.time("concurrent");
+
+    const userPromise = getUser();
+
+    const productsPromise = getProducts();
+
+    const user = await userPromise;
+
+    const products = await productsPromise;
+
+    console.log(`User: ${user}`);
+    console.log(`Products: ${products}`);
+
+    console.timeEnd("concurrent");
+}
+
+
+// 7.
+
+// Die beiden Operationen werden hier früher, gestartet, weil erst die beiden Promises erstellt werden für den User und die Produkte mit getUser() und getProducts() ohne await 
+// und somit beide schon laufen können, auch wenn dann auf das erste gewartet wird.
+// Die gesamte Laufzeit entspricht ungefähr nur der langsamsten Operation weil eben beide gleichzeitig gestartet werden, d.h. die langsamste läuft am Ende als letztes noch und wird 
+// erfüllt, während die anderen schon erfüllt sind.
+// Die await können trotzdem noch nacheinander stehen, weil await zwar den Code in der async Funktion pausiert, das aber nicht für bereits gestartete Promises gilt, diese laufen weiter.
+
+
+// 8.
+
+async function getSettings(): Promise<string> {
+
+    await delay(1000);
+
+    return "dark";
+}
 
 
 
+// 9.
+
+async function loadThreeSequential(): Promise<void> {
+
+    console.time("threeSequential");
+    // Erwarte eine Laufzeit von ca. 6 Sekunden, weil alle Promises nacheinander gestartet und direkt awaited werden wodurch sie nacheinander erfüllt werden und somit ihre
+    // volle Zeit brauchen, heißt 3000ms + 2000ms + 1000ms = 6000ms = 6 Sekunden
+
+    const user = await getUser();
+
+    const products = await getProducts();
+
+    const settings = await getSettings();
+
+    console.timeEnd("threeSequential");
+}
+
+
+// 10.
+
+async function loadThreeConcurrent(): Promise<void> {
+
+    console.time("threeConcurrent");
+    // Jetzt erwarte ich dass der gesamte Ablauf ca. so lange wie die längste Operation braucht, da wir alle gleichzeitig starten und dann nacheinander awaiten. Somit würde ich
+    // eine Dauer von ca. 3 Sekunden erwarten, da getProducts() am längsten wartet mit 3000ms
+
+    const userPromise = getUser();
+
+    const productsPromise = getProducts();
+
+    const settingsPromise = getSettings();
+
+    const user = await userPromise;
+
+    const products = await productsPromise;
+
+    const settings = await settingsPromise;
+
+    console.timeEnd("threeConcurrent");
+}
+
+
+// 11.
+
+async function getUserId(): Promise<number> {
+
+    await delay(1500);
+
+    return 5;
+}
+
+
+async function getPostsForUser(userId: number): Promise<string[]> {
+
+    await delay(2000);
+
+    return ["Post1", "Post2", "Post3"];
+}
 
 
 
+// 12.
+
+async function loadUserPosts(): Promise<void> {
+
+    const userId = await getUserId();
+
+    const posts = await getPostsForUser(userId);
+
+    console.log(posts);
+
+    // Diese Operationen können nicht sinnvoll gleichzeitig gestartet werden, und es sollte erst auf das Promise von getUserId() gewartet werden, weil getPostsForUser() als Argument
+    // die userId braucht (die echten Daten und kein Promise!) und wenn man die Operationen gleichzeitig starten würde (also erst nach getPostsForUser(userId); dann await getUserId() machen
+    // würde), dann wäre userId ein Promise und keine echte userId, somit würde die Funktion intern mit den falschen Daten arbeiten
+}
 
 
+// 13.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// siehe Verständnisfragen
 
 
 
